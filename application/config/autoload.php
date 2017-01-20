@@ -58,7 +58,12 @@ $autoload['packages'] = array();
 |
 |	$autoload['libraries'] = array('user_agent' => 'ua');
 */
-$autoload['libraries'] = array();
+$libss_ = array('session','database');
+//if production will enable this 
+if (ENVIRONMENT === 'production') {
+    $libss_[]='lib_log';
+}
+$autoload['libraries'] = $libss_;
 
 /*
 | -------------------------------------------------------------------
@@ -89,7 +94,7 @@ $autoload['drivers'] = array();
 |
 |	$autoload['helper'] = array('url', 'file');
 */
-$autoload['helper'] = array();
+$autoload['helper'] = array('url', 'language', 'navigation');
 
 /*
 | -------------------------------------------------------------------
@@ -103,7 +108,7 @@ $autoload['helper'] = array();
 | config files.  Otherwise, leave it blank.
 |
 */
-$autoload['config'] = array();
+$autoload['config'] = array('common/config');
 
 /*
 | -------------------------------------------------------------------

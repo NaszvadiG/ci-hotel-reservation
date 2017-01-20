@@ -23,8 +23,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = '';
-
+if (ENVIRONMENT === 'development' || ENVIRONMENT === 'testing') {
+    $config['base_url'] = 'http://[::1]/ci-hotel-reservation/';
+} else if(ENVIRONMENT === 'production'){
+    $config['base_url'] = 'http://attendancemonitoringstii.com/';
+}
 /*
 |--------------------------------------------------------------------------
 | Index File
@@ -35,7 +38,7 @@ $config['base_url'] = '';
 | variable so that it is blank.
 |
 */
-$config['index_page'] = 'index.php';
+$config['index_page'] = '';
 
 /*
 |--------------------------------------------------------------------------
@@ -100,7 +103,7 @@ $config['charset'] = 'UTF-8';
 | setting this variable to TRUE (boolean).  See the user guide for details.
 |
 */
-$config['enable_hooks'] = FALSE;
+$config['enable_hooks'] = (ENVIRONMENT === 'production');
 
 /*
 |--------------------------------------------------------------------------
@@ -223,7 +226,11 @@ $config['allow_get_array'] = TRUE;
 | your log files will fill up very fast.
 |
 */
-$config['log_threshold'] = 0;
+if (ENVIRONMENT === 'development' || ENVIRONMENT === 'testing') {
+   $config['log_threshold'] = array(1,2);
+} else if(ENVIRONMENT === 'production'){
+    $config['log_threshold'] = array(1);
+}
 
 /*
 |--------------------------------------------------------------------------
@@ -260,7 +267,11 @@ $config['log_file_extension'] = '';
 | IMPORTANT: This MUST be an integer (no quotes) and you MUST use octal
 |            integer notation (i.e. 0700, 0644, etc.)
 */
-$config['log_file_permissions'] = 0644;
+if (ENVIRONMENT === 'development' || ENVIRONMENT === 'testing') {
+   $config['log_file_permissions'] = 0777;
+} else if(ENVIRONMENT === 'production'){
+    $config['log_file_permissions'] = 0644;
+}
 
 /*
 |--------------------------------------------------------------------------
@@ -432,7 +443,7 @@ $config['standardize_newlines'] = FALSE;
 |          for backwards compatibility purposes!
 |
 */
-$config['global_xss_filtering'] = FALSE;
+$config['global_xss_filtering'] = TRUE;
 
 /*
 |--------------------------------------------------------------------------
@@ -448,7 +459,7 @@ $config['global_xss_filtering'] = FALSE;
 | 'csrf_regenerate' = Regenerate token on every submission
 | 'csrf_exclude_uris' = Array of URIs which ignore CSRF checks
 */
-$config['csrf_protection'] = FALSE;
+$config['csrf_protection'] = TRUE;
 $config['csrf_token_name'] = 'csrf_test_name';
 $config['csrf_cookie_name'] = 'csrf_cookie_name';
 $config['csrf_expire'] = 7200;
