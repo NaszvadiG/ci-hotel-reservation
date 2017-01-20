@@ -1,4 +1,66 @@
 <?php
+
+
+
+/*
+ |  -----------------------------
+ |  ___PROJECT_ENVIRONTMENT___
+ |  -----------------------------
+ |  
+ |  1 == DEVELOPMENT
+ |  2 == TESTING
+ |  3 == PRODUCTION
+ |
+ | if not specicy, default is development
+ */
+define('___PROJECT_ENVIRONTMENT___', 1);
+
+/*
+ |  -----------------------------
+ |  MAINTENANCE MODE
+ |  -----------------------------
+ |
+ |  
+ */
+$maintenance = FALSE; ## set to true to enable
+/*
+ |  -----------------------------
+ |  REMOTE VALID PUBLIC IP ADDRESS
+ |  -----------------------------
+ |
+ |  if maintenace is TRUE, set public ip address who the one access website
+ */
+$remote_addr='';
+
+
+
+
+//========================================================================
+//========================================================================
+//========================================================================
+//========================================================================
+//========================================================================
+//==============DO NOT MODIFY BELOW HERE==================================
+//========================================================================
+//========================================================================
+//========================================================================
+//========================================================================
+
+
+
+if ($maintenance) {
+    if (isset($_SERVER['REMOTE_ADDR']) and $_SERVER['REMOTE_ADDR'] == $remote_addr ) {
+        ##do nothing
+    } else {
+
+        error_reporting(E_ALL);
+        ini_set('display_errors', 1); ## to debug your maintenance view
+
+        require_once 'maintenance.php'; ## call view
+        return;
+        exit();
+    }
+}
 /**
  * CodeIgniter
  *
@@ -6,7 +68,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
+ * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +91,7 @@
  * @package	CodeIgniter
  * @author	EllisLab Dev Team
  * @copyright	Copyright (c) 2008 - 2014, EllisLab, Inc. (https://ellislab.com/)
- * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @copyright	Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
  * @license	http://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 1.0.0
@@ -53,7 +115,31 @@
  *
  * NOTE: If you change these, also change the error_reporting() code below
  */
-	define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'development');
+$ci_capstone_project_envi='development';
+if(defined('___PROJECT_ENVIRONTMENT___')){
+    if( ___PROJECT_ENVIRONTMENT___ === 1 ){
+        $ci_capstone_project_envi='development';
+    }else if( ___PROJECT_ENVIRONTMENT___ === 2 ){
+        $ci_capstone_project_envi='testing';
+    }else if( ___PROJECT_ENVIRONTMENT___ === 3 ){
+        $ci_capstone_project_envi='production';
+    }
+}
+	define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : $ci_capstone_project_envi);
+
+/*
+  |---------------------------------------------------------------
+  | TimeZone
+  |---------------------------------------------------------------
+  |
+  | default Time Zone
+  |
+
+ */
+if (function_exists('date_default_timezone_set'))
+    date_default_timezone_set('Asia/Manila');
+
+
 
 /*
  *---------------------------------------------------------------
