@@ -51,7 +51,6 @@ class MY_Form_validation extends CI_Form_validation {
         parent::__construct($rules);
     }
 
-
     /**
      * accept input only from 0 to 9
      * if not numeric will return FALSE with invalid message.
@@ -72,6 +71,14 @@ class MY_Form_validation extends CI_Form_validation {
             return FALSE;
         }
         return FALSE;
+    }
+
+    public function combo_box_check_id($value) {
+        if ($value <= 0) {
+            $this->CI->form_validation->set_message('combo_box_check_id', 'The {field} field is invalid or required.');
+            return FALSE;
+        }
+        return TRUE;
     }
 
     /**

@@ -44,7 +44,7 @@ class Add_room extends Admin_Controller {
             array(
                 'label' => 'Type',
                 'field' => 'type',
-                'rules' => 'required'
+                'rules' => 'required|combo_box_check_id'
             ),
             array(
                 'label' => 'Bed Count',
