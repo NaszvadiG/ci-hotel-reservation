@@ -10,28 +10,157 @@ class Reservation extends Public_Controller {
         parent::__construct();
         $this->load->model('Room_model');
         $this->load->library('form_validation');
-
-        $this->data['title_top'] = get_class();
-        $this->data['title_top_desc'] = 'my desc';
-
-        $this->template['image_top_header'] = $this->_render_page('public/_templates/image_top_header', $this->data, TRUE);
+        $this->load->helper(array('combobox', 'date'));
+        $this->form_validation->set_error_delimiters(
+                '<div class="alert alert-danger alert-dismissible" role="alert">
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span></button>
+		<i class="fa fa-question-circle"></i> ', ' </div>'
+        );
     }
 
+    private function _render_reservation_template($template, $data_) {
+        $this->data['title_top'] = get_class();
+        $this->data['title_top_desc'] = 'my desc';
+        $this->template['image_top_header'] = $this->_render_page('public/_templates/image_top_header', $this->data, TRUE);
+
+        $this->template['form_template'] = $this->_render_page($template, $data_, TRUE);
+        $this->_render_public_page(get_class(), $this, 'public/reservation', $this->template);
+    }
+
+    private function check_room_session() {
+        if ($this->session->has_userdata('room_id')) {
+            
+        } else {
+            show_error('Romm is unavailable or not exist.');
+        }
+    }
+
+    private function validate_page_($page) {
+        switch ($page) {
+            default :
+            case 1://select room
+                $session_names = array();
+                $session_names[] = 'room_id';
+
+                //check in                
+                $session_names[] = 'check_in';
+                $session_names[] = 'check_out';
+                $session_names[] = 'adult_count';
+                $session_names[] = 'child_count';
+                $this->session->unset_userdata($session_names);
+                break;
+            case 2://check in
+
+                if (!$this->input->get('room-id')) {
+                    show_error('Missing Parameter.');
+                }
+                $room_id_ = $this->input->get('room-id');
+
+
+                /*
+                 * check if room_id is exist, then check if available
+                 * 
+                 */
+                if (TRUE) {
+                    $this->data['room_id'] = $room_id_;
+                    $this->session->set_userdata('room_id', $room_id_);
+                } else {
+                    show_error('Romm is unavailable or not exist.');
+                }
+
+                break;
+            case 3://personal info
+                $this->check_room_session();
+
+                break;
+            case 4://payment
+                $this->check_room_session();
+                break;
+            case 5://thank you
+                $this->check_room_session();
+                break;
+        }
+    }
+
+    #1 | select room
+
     public function index() {
+        $this->validate_page_(1);
+
 
         //select room
         $this->data['rooms'] = $this->Room_model->where(array('room_active' => TRUE))->with_room_type()->as_object()->get_all();
-        $this->template['form_template'] = $this->_render_page('public/_templates/reservation_check_in', $this->data, TRUE);
-        $this->template['form_template'] .= $this->_render_page('public/_templates/reservation_select_room', $this->data, TRUE);
 
-        $this->_render_public_page(get_class(), $this, 'public/reservation', $this->template);
+        $this->_render_reservation_template('public/_templates/reservation_select_room', $this->data);
     }
 
+    #2
+
+    public function check_in() {
+        $this->validate_page_(2);
+        $this->data['message'] = 'test error';
+        $this->form_validation->set_rules(array(
+            array(
+                'field' => 'check_in',
+                'label' => 'Check In',
+                'rules' => 'required',
+            ),
+            array(
+                'field' => 'check_out',
+                'label' => 'Check Out',
+                'rules' => 'required',
+            ),
+            array(
+                'field' => 'adult_count',
+                'label' => 'Adult',
+                'rules' => 'required',
+            ),
+            array(
+                'field' => 'child_count',
+                'label' => 'Child',
+                'rules' => 'required',
+            ),
+        ));
+
+        if ($this->form_validation->run()) {
+            $this->session->set_userdata(array(
+                'check_in' => $this->input->post('check_in', TRUE),
+                'check_out' => $this->input->post('check_out', TRUE),
+                'adult_count' => $this->input->post('adult_count', TRUE),
+                'child_count' => $this->input->post('child_count', TRUE)
+            ));
+            redirect(base_url('reservation/personal-info'), 'refresh');
+        } else {
+            $this->data['message'] = validation_errors();
+        }
+
+        $this->_render_reservation_template('public/_templates/reservation_check_in', $this->data);
+    }
+
+    #3
+
     public function personal_info() {
+        $this->validate_page_(3);
 
-        $this->template['form_template'] = $this->_render_page('public/_templates/reservation_personal_info', $this->data, TRUE);
+        $this->data['room'] = $this->Room_model->where(array('room_id' => $this->session->userdata('room_id')))->with_room_type()->as_object()->get();
+        $this->_render_reservation_template('public/_templates/reservation_personal_info', $this->data);
+    }
 
-        $this->_render_public_page(get_class(), $this, 'public/reservation', $this->template);
+    #4
+
+    public function payment() {
+        $this->validate_page_(4);
+
+        $this->_render_reservation_template('public/_templates/reservation_payment', $this->data);
+    }
+
+    #5
+
+    public function thank_you() {
+        $this->validate_page_(5);
+
+        $this->_render_reservation_template('public/_templates/reservation_thank_you', $this->data);
     }
 
     public function resources($bootstrap_dir = NULL) {

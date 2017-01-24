@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 <!-- 44 thank-you-->
-<div role="tabpanel" class="tab-pane fade" id="thank-you">
+<div class="mg-available-rooms">
     <div class="alert alert-success alert-dismissible clearfix">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <div class="mg-alert-icon"><i class="fa fa-check"></i></div>

@@ -1,8 +1,9 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+echo form_open(base_url('reservation/thank-you'));
 ?>
 <!-- 33 payment-->
-<div role="tabpanel" class="tab-pane fade" id="payment">
+<div class="mg-available-rooms">
     <div class="row">
         <div class="col-md-8">
             <div class="mg-book-form-billing">
@@ -364,8 +365,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         </div>
                     </div>
                 </div>
-                <a href="#thank-you" class="btn btn-dark-main btn-next-tab pull-right">Pay Now</a>
-                <a href="#personal-info" class="btn btn-default btn-prev-tab pull-left">Back</a>
+                <?php echo form_submit('payment__btn', 'Pay Now', array('class' => 'btn btn-dark-main pull-right')) ?>
             </div>
         </div>
         <div class="col-md-4">
@@ -412,3 +412,5 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </div>
 </div>                            
 <!-- //33-->
+<?php
+echo form_close();

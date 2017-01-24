@@ -10,39 +10,38 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 </div>
                 <div class="col-md-9">
                     <div class="mg-bn-forms">
-                        <?php echo form_open(); ?>
+                        <?php
+                        echo form_open(current_url() . '/?room-id=' . $room_id);
+                        echo $message;
+                        ?>
                         <div class="row">
                             <div class="col-md-3 col-xs-6">
                                 <div class="input-group date mg-check-in">
                                     <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                                    <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Check In">
+                                    <input name="check_in" type="text" class="form-control" id="exampleInputEmail1" placeholder="Check In" value="<?php echo set_value('check_in'); ?>">
                                 </div>
                             </div>
                             <div class="col-md-3 col-xs-6">
                                 <div class="input-group date mg-check-out">
                                     <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                                    <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Check Out">
+                                    <input name="check_out" type="text" class="form-control" id="exampleInputEmail1" placeholder="Check Out" value="<?php echo set_value('check_out'); ?>">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="row"> 
                                     <div class="col-xs-6">
-                                        <select class="cs-select cs-skin-elastic">
-                                            <option value="" disabled selected>Adult</option>
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                            <option value="4">4</option>
-                                        </select>
+                                        <?php
+                                        echo form_dropdown(
+                                                'adult_count', combo_number_public(1, 4, 'Adult', set_value('adult_count')), set_value('adult_count'), array('class' => 'cs-select cs-skin-elastic')
+                                        );
+                                        ?>
                                     </div>
                                     <div class="col-xs-6">
-                                        <select class="cs-select cs-skin-elastic">
-                                            <option value="" disabled selected>Child</option>
-                                            <option value="0">0</option>
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                        </select>
+                                        <?php
+                                        echo form_dropdown(
+                                                'child_count', combo_number_public(0, 4, 'Child', set_value('child_count')), set_value('child_count'), array('class' => 'cs-select cs-skin-elastic')
+                                        );
+                                        ?>
                                     </div>
                                 </div>
                             </div>
@@ -56,3 +55,4 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </div>
         </div>
     </div>
+</div>

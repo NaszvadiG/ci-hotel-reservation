@@ -1,5 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+echo form_open(base_url('reservation/payment'));
 ?>
 <!-- 22 personal-info -->
 <div class="mg-available-rooms">
@@ -337,8 +338,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <label><input type="checkbox"> By Sign up you are agree with our <a href="#">terms and condition</a></label>
                     </div>
                 </div>
-                <a href="#payment" class="btn btn-dark-main btn-next-tab pull-right">Next</a>
-                <a href="#select-room" class="btn btn-default btn-prev-tab pull-left">Back</a>
+                <?php echo form_submit('persona_info_btn', 'Next', array('class' => 'btn btn-dark-main pull-right')) ?>
             </div>
         </div>
         <div class="col-md-4">
@@ -347,28 +347,28 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <h2 class="mg-widget-title">Booking Details</h2>
                     <div class="mg-widget-cart">
                         <div class="mg-cart-room">
-                            <img src="<?php echo $bootstrap_dir; ?>images/room-1.png" alt="Delux Room" class="img-responsive">
-                            <h3>Super Delux</h3>
+                            <img src="<?php echo base_url($this->config->item('room_image_dir') . $room->room_image); ?>" alt="<?php echo $room->room_type->room_type_name; ?>" class="img-responsive">
+                            <h3><?php echo $room->room_type->room_type_name; ?></h3>
                         </div>
                         <div class="mg-widget-cart-row">
                             <strong>Check In:</strong>
-                            <span>27 Jan, 2015</span>
+                            <span><?php echo $this->session->userdata('check_in'); ?></span>
                         </div>
                         <div class="mg-widget-cart-row">
                             <strong>Check Out:</strong>
-                            <span>28 Jan, 2015</span>
+                            <span><?php echo $this->session->userdata('check_out'); ?></span>
                         </div>
                         <div class="mg-widget-cart-row">
                             <strong>Adults:</strong>
-                            <span>2</span>
+                            <span><?php echo $this->session->userdata('adult_count'); ?></span>
                         </div>
                         <div class="mg-widget-cart-row">
                             <strong>Child:</strong>
-                            <span>1</span>
+                            <span><?php echo $this->session->userdata('child_count'); ?></span>
                         </div>
                         <div class="mg-cart-total">
                             <strong>Total:</strong>
-                            <span>$249.99</span>
+                            <span><?php echo $this->config->item('currency') ?>249.99</span>
                         </div>
                     </div>
                 </aside>
@@ -377,3 +377,5 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </div>
 </div>
 <!-- //22 -->
+<?php
+echo form_close();
