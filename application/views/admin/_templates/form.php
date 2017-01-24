@@ -6,7 +6,7 @@ function checkbox($array) {
         ?>
         <div class="checkbox">
             <label for="<?php echo $key; ?>">
-                <?php echo form_checkbox($key, $key, set_value($key)); ?>
+                <?php echo form_checkbox($key, $key, html_escape(set_value($key))); ?>
                 <?php echo $val; ?>
             </label>
         </div>
@@ -56,7 +56,7 @@ function checkbox($array) {
                                         echo form_input(array(
                                             'name' => $mykey,
                                             'class' => 'form-control',
-                                            'value' => ($attr['value'] == NULL) ? set_value($mykey) : $attr['value'],
+                                            'value' => ($attr['value'] == NULL) ? html_escape(set_value($mykey)) : $attr['value'],
                                             'placeholder' => $attr['title']
                                         ));
                                         break;
@@ -65,12 +65,12 @@ function checkbox($array) {
                                             'name' => $mykey,
                                             'type' => 'password',
                                             'class' => 'form-control',
-                                            'value' => ($attr['value'] == NULL) ? set_value($mykey) : $attr['value'],
+                                            'value' => ($attr['value'] == NULL) ? html_escape(set_value($mykey)) : $attr['value'],
                                             'placeholder' => $attr['title']
                                         ));
                                         break;
                                     case 'combo':
-                                        echo form_dropdown($mykey, $attr['combo_value'], ($attr['value'] == NULL) ? set_value($mykey) : $attr['value'], array(
+                                        echo form_dropdown($mykey, $attr['combo_value'], ($attr['value'] == NULL) ? html_escape(set_value($mykey)) : $attr['value'], array(
                                             'class' => 'form-control'
                                         ));
                                         break;
