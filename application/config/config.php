@@ -26,7 +26,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 if (ENVIRONMENT === 'development' || ENVIRONMENT === 'testing') {
     $config['base_url'] = 'http://[::1]/ci-hotel-reservation/';
 } else if(ENVIRONMENT === 'production'){
-    $config['base_url'] = 'http://attendancemonitoringstii.com/';
+    $config['base_url'] = 'http://hotel-reservation.lloricmayugagarcia.com/';
 }
 /*
 |--------------------------------------------------------------------------
