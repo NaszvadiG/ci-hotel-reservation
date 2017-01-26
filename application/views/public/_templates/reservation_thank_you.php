@@ -6,7 +6,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <div class="alert alert-success alert-dismissible clearfix">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <div class="mg-alert-icon"><i class="fa fa-check"></i></div>
-        <h3 class="mg-alert-payment">Thank you! Your booking is confirmed. Invoice Sent in your email address</h3>
+       <?php echo $result_; ?>
     </div>
     <div class="mg-cart-container mg-paid">
         <aside class="mg-widget mt50" id="mg-room-cart">
@@ -21,7 +21,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <h3 class="mg-payment-id">Your Payment ID: #105152396140</h3>
+                        <h3 class="mg-payment-id">Your Payment ID: <?php echo $payment_id; ?></h3>
                         <div class="mg-widget-cart-row">
                             <strong>Check In:</strong>
                             <span><?php echo convert_date_($this->session->userdata('check_in')); ?></span>

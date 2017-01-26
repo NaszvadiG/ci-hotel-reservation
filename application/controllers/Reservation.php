@@ -5,11 +5,30 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Reservation extends Public_Controller {
 
 
+        protected $session_names_;
         protected $data;
         protected $template;
 
         public function __construct() {
                 parent::__construct();
+                $this->session_names_ = array(
+                    'room_id',
+                    //check in                
+                    'check_in',
+                    'check_out',
+                    'adult_count',
+                    'child_count',
+                    //personal info                
+                    'firstname',
+                    'lastname',
+                    'email',
+                    'phone',
+                    //card info                
+                    'card_number',
+                    'card_cvv',
+                    'card_expire_month',
+                    'card_expire_year',
+                );
                 $this->load->model('Room_model');
                 $this->load->library('form_validation');
                 $this->load->helper(array('combobox', 'date'));
@@ -45,29 +64,7 @@ class Reservation extends Public_Controller {
         }
 
         private function unset_sessions_() {
-                $session_names = array();
-                $session_names[] = 'room_id';
-
-                //check in                
-                $session_names[] = 'check_in';
-                $session_names[] = 'check_out';
-                $session_names[] = 'adult_count';
-                $session_names[] = 'child_count';
-
-                //personal info                
-                $session_names[] = 'firstname';
-                $session_names[] = 'lastname';
-                $session_names[] = 'email';
-                $session_names[] = 'phone';
-
-                //card info                
-                $session_names[] = 'card_number';
-                $session_names[] = 'card_cvv';
-                $session_names[] = 'card_expire_month';
-                $session_names[] = 'card_expire_year';
-
-
-                $this->session->unset_userdata($session_names);
+                $this->session->unset_userdata($this->session_names_);
         }
 
         private function validate_page_($page) {
@@ -251,13 +248,32 @@ class Reservation extends Public_Controller {
 
         #5
 
-        public function thank_you() {
+        public function thank_you()                 
+        {
                 $this->validate_page_(5);
+                $this->load->helper('string');
+                $payment_id = '#' . random_string('unique');
+                $this->data['payment_id'] = $payment_id;
                 $this->data['room'] = $this->Room_model->where(array('room_id' => $this->session->userdata('room_id')))->with_room_type()->as_object()->get();
 
-                $this->_render_reservation_template('public/_templates/reservation_thank_you', $this->data);
 
+                if ($this->save_reservation()) {
+                        $this->data['result_'] = '<h3 class="mg-alert-payment">' . $this->config->item('success_reservation') . '</h3>';
+                } else {
+                        $this->data['result_'] = '<h3 class="mg-alert-payment">' . $this->config->item('failed_reservation') . '</h3>';
+                }
+
+                $this->_render_reservation_template('public/_templates/reservation_thank_you', $this->data);
                 $this->unset_sessions_();
+        }
+
+        private function save_reservation() {
+                foreach ($this->session_names_ as $k => $v) {
+                        if (!$this->session->has_userdata($v)) {
+                                return FALSE;
+                        }
+                }
+                return TRUE;
         }
 
         public function resources($bootstrap_dir = NULL) {

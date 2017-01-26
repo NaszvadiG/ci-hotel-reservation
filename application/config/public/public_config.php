@@ -24,6 +24,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  */
 
 $config['email_reciever'] = 'emorickfighter@gmail.com';
+/*
+  | ---------------------------------
+  | message submit reservation
+  | ---------------------------------
+  |
+  |
+  |
+  |
+  |
+ */
+
+$config['success_reservation'] = 'Thank you! Your booking is confirmed. Invoice Sent in your email address';
+$config['failed_reservation'] = 'Failed to reserve you reservation, Please contact administrator.';
 
 
 /*
