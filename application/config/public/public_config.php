@@ -36,7 +36,7 @@ $config['email_reciever'] = 'emorickfighter@gmail.com';
  */
 
 $config['success_reservation'] = 'Thank you! Your booking is confirmed. Invoice Sent in your email address';
-$config['failed_reservation'] = 'Failed to reserve you reservation, Please contact administrator.';
+$config['failed_reservation']  = 'Failed to reserve you reservation, Please contact administrator.';
 
 
 /*
@@ -50,9 +50,9 @@ $config['failed_reservation'] = 'Failed to reserve you reservation, Please conta
   |
  */
 $config['contact_long_description'] = 'Lorem Ipsum Dolor Lorem Ipsum Dolor Lorem Ipsum Dolor ';
-$config['address'] = 'Labason Zambo';
-$config['contact_number'] = '+63912 345 678';
-$config['email'] = 'admin@admin.com';
+$config['address']                  = 'Labason Zambo';
+$config['contact_number']           = '+63912 345 678';
+$config['email']                    = 'admin@admin.com';
 
 
 /*
@@ -72,11 +72,11 @@ $config['email'] = 'admin@admin.com';
   |     sample | $config['footer_facebook'] = 'https://web.facebook/user';
   |
  */
-$config['footer_facebook'] = 'https://web.facebook.com/ClashRoyale/';
-$config['footer_twitter'] = 'https://twitter.com/ClashofClans';
-$config['footer_pinterest'] = FALSE;
+$config['footer_facebook']    = 'https://web.facebook.com/ClashRoyale/';
+$config['footer_twitter']     = 'https://twitter.com/ClashofClans';
+$config['footer_pinterest']   = FALSE;
 $config['footer_google_plus'] = FALSE;
-$config['footer_rss'] = FALSE;
+$config['footer_rss']         = FALSE;
 
 # say something here
 $config['footer_social_media'] = 'Tibi alienus possimus nomini legendus pariatur,';
@@ -93,4 +93,4 @@ $config['footer_social_media'] = 'Tibi alienus possimus nomini legendus pariatur
  */
 
 $config['current_year'] = '2017';
-$config['view_folder'] = 'public';
+$config['view_folder']  = 'public';

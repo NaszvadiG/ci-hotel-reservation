@@ -16,15 +16,16 @@ echo $image_top_header;
                                 <input type="radio" name="filter" value="all" checked="checked">
                                 All
                             </label>
-                            <?php if ($room_types):
-                                foreach ($room_types as $k => $v):
-                                    ?>
-                                    <label class="btn btn-dark">
-                                        <input type="radio" name="filter" value="<?php echo $v->room_type_name; ?>">
-                                    <?php echo $v->room_type_name; ?>
-                                    </label>
-                                <?php
-                                endforeach;
+                            <?php
+                            if ($room_types):
+                                    foreach ($room_types as $k => $v):
+                                            ?>
+                                            <label class="btn btn-dark">
+                                                <input type="radio" name="filter" value="<?php echo $v->room_type_name; ?>">
+                                                <?php echo $v->room_type_name; ?>
+                                            </label>
+                                            <?php
+                                    endforeach;
                             endif;
                             ?>
                         </fieldset>
@@ -34,21 +35,22 @@ echo $image_top_header;
                 <div class="row" id="mg-grid">
                     <?php
                     if ($rooms):
-                        foreach ($rooms as $room):
-                            if (!$room->room_type->room_type_active) {
-                                continue;
-                            }
-                            ?>
-                            <figure class="col-md-4 mg-gallery-item" data-groups='["<?php echo $room->room_type->room_type_name; ?>"]'>
-                                <a href="<?php echo base_url('assets/images/rooms/' . $room->room_image); ?>" data-lightbox-gallery="rooms">
-                                    <img src="<?php echo base_url('assets/images/rooms/' . $room->room_image); ?>" class="img-responsive" alt="room number <?php echo $room->room_number; ?>" />
-                                    <span class="mg-gallery-overlayer">
-                                        <i class="fa fa-search-plus"></i>
-                                    </span>
-                                </a>
-                            </figure>
-                            <?php
-                        endforeach;
+                            foreach ($rooms as $room):
+                                    if (!$room->room_type->room_type_active)
+                                    {
+                                            continue;
+                                    }
+                                    ?>
+                                    <figure class="col-md-4 mg-gallery-item" data-groups='["<?php echo $room->room_type->room_type_name; ?>"]'>
+                                        <a href="<?php echo base_url('assets/images/rooms/' . $room->room_image); ?>" data-lightbox-gallery="rooms">
+                                            <img src="<?php echo base_url('assets/images/rooms/' . $room->room_image); ?>" class="img-responsive" alt="room number <?php echo $room->room_number; ?>" />
+                                            <span class="mg-gallery-overlayer">
+                                                <i class="fa fa-search-plus"></i>
+                                            </span>
+                                        </a>
+                                    </figure>
+                                    <?php
+                            endforeach;
                     endif;
                     ?>
                 </div>

@@ -2,11 +2,13 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Room_model extends MY_Model {
+class Room_model extends MY_Model
+{
 
-        public function __construct() {
-                $this->table = 'room';
-                $this->primary_key = 'room_id';
+        public function __construct()
+        {
+                $this->table            = 'room';
+                $this->primary_key      = 'room_id';
                 //   $this->soft_deletes = true;
                 // $this->has_one['details'] = 'User_model';
                 # $this->has_one['user'] = array('User_model', 'user_id', 'id');
@@ -19,7 +21,7 @@ class Room_model extends MY_Model {
                 // you can set the database connection that you want to use for this particular model, by passing the group connection name or a config array. By default will use the default connection
                 //  $this->_database_connection = 'special_connection';
                 // you can disable the use of timestamps. This way, MY_Model won't try to set a created_at and updated_at value on create methods. Also, if you pass it an array as calue, it tells MY_Model, that the first element is a created_at field type, the second element is a updated_at field type (and the third element is a deleted_at field type if $this->soft_deletes is set to TRUE)
-                $this->timestamps = TRUE;
+                $this->timestamps           = TRUE;
 
                 // you can enable (TRUE) or disable (FALSE) the "soft delete" on records. Default is FALSE, which means that when you delete a row, that one is gone forever
                 $this->soft_deletes = FALSE;

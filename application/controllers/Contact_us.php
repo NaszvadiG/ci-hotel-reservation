@@ -2,9 +2,11 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Contact_us extends Public_Controller {
+class Contact_us extends Public_Controller
+{
 
-        public function __construct() {
+        public function __construct()
+        {
                 parent::__construct();
                 $this->load->library(array('form_validation', 'ion_auth'));
                 $this->form_validation->set_error_delimiters(
@@ -12,12 +14,13 @@ class Contact_us extends Public_Controller {
                 );
         }
 
-        public function index() {
+        public function index()
+        {
 
 
-                $this->data['title_top'] = get_class();
+                $this->data['title_top']      = get_class();
                 $this->data['title_top_desc'] = 'my desc';
-                $this->data['result'] = '';
+                $this->data['result']         = '';
 
                 $this->form_validation->set_rules(array(
                     array(
@@ -42,10 +45,13 @@ class Contact_us extends Public_Controller {
                     ),
                 ));
 
-                if ($this->form_validation->run()) {
+                if ($this->form_validation->run())
+                {
                         $this->_send_email_();
                         $this->data['result'] = $this->config->item('message_start_delimiter', 'ion_auth') . 'sent!' . $this->config->item('message_end_delimiter', 'ion_auth');
-                } else {
+                }
+                else
+                {
                         $this->data['result'] = validation_errors();
                 }
                 $this->template['image_top_header'] = $this->_render_page('public/_templates/image_top_header', $this->data, TRUE);
@@ -53,12 +59,15 @@ class Contact_us extends Public_Controller {
                 $this->_render_public_page(get_class(), $this, 'public/contact', $this->template);
         }
 
-        private function _send_email_() {
+        private function _send_email_()
+        {
                 mail($this->config->item('email_reciever'), $this->input->post('subject', TRUE), $this->input->post('message', TRUE), "From:" . $this->input->post('email', TRUE));
         }
 
-        public function resources($bootstrap_dir = NULL) {
-                if (is_null($bootstrap_dir)) {
+        public function resources($bootstrap_dir = NULL)
+        {
+                if (is_null($bootstrap_dir))
+                {
                         show_404();
                 }
                 return'<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic|Playfair+Display:400,400italic,700,700italic,900,900italic" rel="stylesheet" type"=text/css">
@@ -89,8 +98,10 @@ class Contact_us extends Public_Controller {
                         <script src="' . $bootstrap_dir . 'js/modernizr.custom.min.js"></script>';
         }
 
-        public function resources_footer($bootstrap_dir = NULL) {
-                if (is_null($bootstrap_dir)) {
+        public function resources_footer($bootstrap_dir = NULL)
+        {
+                if (is_null($bootstrap_dir))
+                {
                         show_404();
                 }
                 return '<!-- jQuery (necessary for Bootstrap\'s JavaScript plugins) -->

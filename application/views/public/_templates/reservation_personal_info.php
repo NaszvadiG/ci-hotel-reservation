@@ -7,7 +7,7 @@ echo form_open(base_url('reservation/personal-info'));
     <div class="row">
         <div class="col-md-8">
             <div class="mg-book-form-personal">
-                
+
                 <h2 class="mg-sec-left-title">Personal Info</h2>
                 <?php echo $message; ?>
                 <div class="row pb40">

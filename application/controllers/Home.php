@@ -2,25 +2,30 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Home extends Public_Controller {
+class Home extends Public_Controller
+{
 
-        public function __construct() {
+        public function __construct()
+        {
                 parent::__construct();
                 $this->load->model('Room_model');
         }
 
-        public function index() {
+        public function index()
+        {
 
                 $this->data['rooms'] = $this->Room_model->where(array('room_active' => TRUE, 'room_best' => TRUE))->with_room_type()->as_object()->get_all();
 
-                $this->template['slider'] = $this->_render_page('public/_templates/slider', $this->data, TRUE);
+                $this->template['slider']     = $this->_render_page('public/_templates/slider', $this->data, TRUE);
                 $this->template['index_room'] = $this->_render_page('public/_templates/index_room', $this->data, TRUE);
 
                 $this->_render_public_page(get_class(), $this, 'public/home', $this->template);
         }
 
-        public function resources($bootstrap_dir = NULL) {
-                if (is_null($bootstrap_dir)) {
+        public function resources($bootstrap_dir = NULL)
+        {
+                if (is_null($bootstrap_dir))
+                {
                         show_404();
                 }
                 return '<link href = "https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic|Playfair+Display:400,400italic,700,700italic,900,900italic" rel = "stylesheet" type = "text/css">
@@ -48,8 +53,10 @@ class Home extends Public_Controller {
                         <script src="' . $bootstrap_dir . 'js/modernizr.custom.min.js"></script>';
         }
 
-        public function resources_footer($bootstrap_dir = NULL) {
-                if (is_null($bootstrap_dir)) {
+        public function resources_footer($bootstrap_dir = NULL)
+        {
+                if (is_null($bootstrap_dir))
+                {
                         show_404();
                 }
                 return '<!-- jQuery (necessary for Bootstrap\'s JavaScript plugins) -->

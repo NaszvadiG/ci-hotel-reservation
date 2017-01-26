@@ -25,5 +25,5 @@ $config['currency'] = '₱';
   |
   |
  */
-$config['bootstrap_dir'] = 'assets/frameworks/bootstrap/';
+$config['bootstrap_dir']  = 'assets/frameworks/bootstrap/';
 $config['room_image_dir'] = 'assets/images/rooms/';

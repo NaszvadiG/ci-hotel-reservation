@@ -2,29 +2,32 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Rooms extends Admin_Controller {
+class Rooms extends Admin_Controller
+{
 
-        public function __construct() {
+        public function __construct()
+        {
                 parent::__construct();
         }
 
-        public function index() {
+        public function index()
+        {
 
                 $this->template['table'] = $this->_render_table_view('Rooms', 'rooms', array(
-                    'room_image' => 'Image',
-                    'room_number' => 'Room Number',
-                    'room_description' => 'Description',
-                    'room_type' => 'Type',
-                    'room_price' => 'Price',
-                    'room_bed_count' => 'bed Count',
+                    'room_image'         => 'Image',
+                    'room_number'        => 'Room Number',
+                    'room_description'   => 'Description',
+                    'room_type'          => 'Type',
+                    'room_price'         => 'Price',
+                    'room_bed_count'     => 'bed Count',
                     'room_has_breakfast' => 'BreakFast',
-                    'room_has_aircon' => 'Aircon',
-                    'room_has_gym' => 'Gym',
-                    'room_has_tvlcd' => 'TV LCD',
-                    'room_has_wifi' => 'Wifi',
-                    'room_best' => 'As Best',
-                    'room_active' => 'Active',
-                    'user' => 'Admin'
+                    'room_has_aircon'    => 'Aircon',
+                    'room_has_gym'       => 'Gym',
+                    'room_has_tvlcd'     => 'TV LCD',
+                    'room_has_wifi'      => 'Wifi',
+                    'room_best'          => 'As Best',
+                    'room_active'        => 'Active',
+                    'user'               => 'Admin'
                 ));
 
 
@@ -32,7 +35,8 @@ class Rooms extends Admin_Controller {
                 $this->_render_admin_page('admin/users', $this->template);
         }
 
-        public function change_status($room_id = NULL) {
+        public function change_status($room_id = NULL)
+        {
                 check_valid_parameter($room_id);
                 $this->load->model('Room_model');
                 $obj = $this->Room_model->as_object()->get($room_id);
@@ -40,7 +44,8 @@ class Rooms extends Admin_Controller {
                 $this->index();
         }
 
-        public function change_best($room_id = NULL) {
+        public function change_best($room_id = NULL)
+        {
                 check_valid_parameter($room_id);
                 $this->load->model('Room_model');
                 $obj = $this->Room_model->as_object()->get($room_id);
@@ -48,7 +53,8 @@ class Rooms extends Admin_Controller {
                 $this->index();
         }
 
-        public function change_breakfast($room_id = NULL) {
+        public function change_breakfast($room_id = NULL)
+        {
                 check_valid_parameter($room_id);
                 $this->load->model('Room_model');
                 $obj = $this->Room_model->as_object()->get($room_id);
@@ -56,7 +62,8 @@ class Rooms extends Admin_Controller {
                 $this->index();
         }
 
-        public function change_aircon($room_id = NULL) {
+        public function change_aircon($room_id = NULL)
+        {
                 check_valid_parameter($room_id);
                 $this->load->model('Room_model');
                 $obj = $this->Room_model->as_object()->get($room_id);
@@ -64,7 +71,8 @@ class Rooms extends Admin_Controller {
                 $this->index();
         }
 
-        public function change_gym($room_id = NULL) {
+        public function change_gym($room_id = NULL)
+        {
                 check_valid_parameter($room_id);
                 $this->load->model('Room_model');
                 $obj = $this->Room_model->as_object()->get($room_id);
@@ -72,7 +80,8 @@ class Rooms extends Admin_Controller {
                 $this->index();
         }
 
-        public function change_tvlcd($room_id = NULL) {
+        public function change_tvlcd($room_id = NULL)
+        {
                 check_valid_parameter($room_id);
                 $this->load->model('Room_model');
                 $obj = $this->Room_model->as_object()->get($room_id);
@@ -80,7 +89,8 @@ class Rooms extends Admin_Controller {
                 $this->index();
         }
 
-        public function change_wifi($room_id = NULL) {
+        public function change_wifi($room_id = NULL)
+        {
                 check_valid_parameter($room_id);
                 $this->load->model('Room_model');
                 $obj = $this->Room_model->as_object()->get($room_id);

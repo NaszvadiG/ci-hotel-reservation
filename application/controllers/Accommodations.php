@@ -2,26 +2,31 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Accommodations extends Public_Controller {
+class Accommodations extends Public_Controller
+{
 
-        public function __construct() {
+        public function __construct()
+        {
                 parent::__construct();
                 $this->load->model(array('Room_type_model', 'Room_model'));
         }
 
-        public function index() {
-                $this->data['title_top'] = get_class();
+        public function index()
+        {
+                $this->data['title_top']      = get_class();
                 $this->data['title_top_desc'] = 'my desc';
 
                 $this->template['image_top_header'] = $this->_render_page('public/_templates/image_top_header', $this->data, TRUE);
-                $this->template['room_types'] = $this->Room_type_model->where(array('room_type_active' => TRUE))->as_object()->get_all();
-                $this->template['rooms'] = $this->Room_model->where(array('room_active' => TRUE))->with_room_type()->as_object()->get_all();
+                $this->template['room_types']       = $this->Room_type_model->where(array('room_type_active' => TRUE))->as_object()->get_all();
+                $this->template['rooms']            = $this->Room_model->where(array('room_active' => TRUE))->with_room_type()->as_object()->get_all();
 
                 $this->_render_public_page(get_class(), $this, 'public/accomodation', $this->template);
         }
 
-        public function resources($bootstrap_dir = NULL) {
-                if (is_null($bootstrap_dir)) {
+        public function resources($bootstrap_dir = NULL)
+        {
+                if (is_null($bootstrap_dir))
+                {
                         show_404();
                 }
                 return ' <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic|Playfair+Display:400,400italic,700,700italic,900,900italic" rel="stylesheet" type="text/css">
@@ -52,8 +57,10 @@ class Accommodations extends Public_Controller {
                             <script src="' . $bootstrap_dir . 'js/modernizr.custom.min.js"></script>';
         }
 
-        public function resources_footer($bootstrap_dir = NULL) {
-                if (is_null($bootstrap_dir)) {
+        public function resources_footer($bootstrap_dir = NULL)
+        {
+                if (is_null($bootstrap_dir))
+                {
                         show_404();
                 }
                 return '<!-- jQuery (necessary for Bootstrap\'s JavaScript plugins) -->

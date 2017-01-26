@@ -45,9 +45,11 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
  * 
  * @author Lloric Garcia <emorickfighter@gmail.com>
  */
-class MY_Form_validation extends CI_Form_validation {
+class MY_Form_validation extends CI_Form_validation
+{
 
-        public function __construct($rules = array()) {
+        public function __construct($rules = array())
+        {
                 parent::__construct($rules);
         }
 
@@ -58,11 +60,15 @@ class MY_Form_validation extends CI_Form_validation {
          * @param string $value
          * @return boolean
          */
-        public function numeric_0_to_9($value) {
+        public function numeric_0_to_9($value)
+        {
                 $this->CI->form_validation->set_message('numeric_0_to_9', lang('validation_numeric_0_to_9'));
-                if ($value >= 0 && $value <= 9) {
+                if ($value >= 0 && $value <= 9)
+                {
                         return TRUE;
-                } else if ($value < 0 || $value > 9) {
+                }
+                else if ($value < 0 || $value > 9)
+                {
 
                         /**
                          * if someone try in inspect element then change the html values
@@ -79,7 +85,8 @@ class MY_Form_validation extends CI_Form_validation {
          * @param string $value
          * @return bool
          */
-        public function combo_box_check_id($value) {
+        public function combo_box_check_id($value)
+        {
                 $this->CI->form_validation->set_message('combo_box_check_id', 'The {field} field is invalid or required.');
                 return ($value > 0);
         }
@@ -92,7 +99,8 @@ class MY_Form_validation extends CI_Form_validation {
          * @param string $value
          * @return boolean
          */
-        public function human_name($value) {
+        public function human_name($value)
+        {
                 $this->CI->form_validation->set_message('human_name', lang('validation_human_name'));
 
                 # a to z(small chars) 
@@ -115,7 +123,8 @@ class MY_Form_validation extends CI_Form_validation {
          * @param string $value
          * @return boolean
          */
-        public function school_id($value) {
+        public function school_id($value)
+        {
                 $this->CI->form_validation->set_message('school_id', lang('validation_school_id'));
 
                 #  '\d' means digit/numeric
@@ -136,28 +145,34 @@ class MY_Form_validation extends CI_Form_validation {
          * @param int $level 
          * @return bool
          */
-        public function password_level($value, $level) {
+        public function password_level($value, $level)
+        {
                 $score = 0;
                 $this->CI->form_validation->set_message('password_level', lang('validation_password_level'));
 
                 # plus 1 score if has numeric
-                if (preg_match('!\d!', $value)) {
+                if (preg_match('!\d!', $value))
+                {
                         $score++;
                 }
                 # has capital letter
-                if (preg_match('![A-Z]!', $value)) {
+                if (preg_match('![A-Z]!', $value))
+                {
                         $score++;
                 }
                 # has small letter
-                if (preg_match('![a-z]!', $value)) {
+                if (preg_match('![a-z]!', $value))
+                {
                         $score++;
                 }
                 # has special character
-                if (preg_match('!\W!', $value)) {
+                if (preg_match('!\W!', $value))
+                {
                         $score++;
                 }
                 # length greater than or equal 8
-                if (strlen($value) >= 8) {
+                if (strlen($value) >= 8)
+                {
                         $score++;
                 }
 
@@ -172,7 +187,8 @@ class MY_Form_validation extends CI_Form_validation {
          * @param type $value
          * @return boolean
          */
-        public function username($value) {
+        public function username($value)
+        {
                 $this->CI->form_validation->set_message('username', lang('validation_username'));
 
                 return preg_match('/^[a-zA-Z0-9]+[_.-]{0,1}[a-zA-Z0-9]+$/m', $value);
@@ -184,7 +200,8 @@ class MY_Form_validation extends CI_Form_validation {
          * @param type $value
          * @return boolean
          */
-        public function no_space($value) {
+        public function no_space($value)
+        {
                 $this->CI->form_validation->set_message('no_space', lang('validation_no_space'));
 
                 # from start to end of a line must no have white space.
@@ -197,7 +214,8 @@ class MY_Form_validation extends CI_Form_validation {
          * 
          * @return boolean
          */
-        public function image_required($value) {
+        public function image_required($value)
+        {
 //        if (isset($_FILES[$value]) && !empty($_FILES[$value]['name'])) {
 //            return true;
 //        } else {

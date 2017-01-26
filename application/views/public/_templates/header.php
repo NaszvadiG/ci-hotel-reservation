@@ -33,9 +33,9 @@ $bootstrap_dir = base_url($bootstrap_dir);
                             <?php
                             //preparing navigations
                             foreach ($navigations as $k => $v):
-                                $active = ( $v === $title) ? '  class="active"' : '';
-                                ?>
-                                <li<?php echo $active; ?>><a href="<?php echo base_url($k); ?>"><?php echo $v; ?></a></li>
+                                    $active = ( $v === $title) ? '  class="active"' : '';
+                                    ?>
+                                    <li<?php echo $active; ?>><a href="<?php echo base_url($k); ?>"><?php echo $v; ?></a></li>
                             <?php endforeach; ?>
                         </ul>
                     </div><!-- /.navbar-collapse -->

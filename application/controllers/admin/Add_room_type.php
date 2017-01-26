@@ -2,9 +2,11 @@
 
 defined('BASEPATH') or exit('invalid');
 
-class Add_room_type extends Admin_Controller {
+class Add_room_type extends Admin_Controller
+{
 
-        function __construct() {
+        function __construct()
+        {
                 parent::__construct();
                 $this->load->library('form_validation');
                 $this->form_validation->set_error_delimiters(
@@ -12,7 +14,8 @@ class Add_room_type extends Admin_Controller {
                 );
         }
 
-        public function index() {
+        public function index()
+        {
                 $this->form_validation->set_rules(array(
                     array(
                         'label' => 'Name',
@@ -25,11 +28,12 @@ class Add_room_type extends Admin_Controller {
                         'rules' => 'required'
                     ),
                 ));
-                if (!$this->form_validation->run()) {
+                if (!$this->form_validation->run())
+                {
                         $my_form = array(
-                            'caption' => 'Add Room Type',
-                            'action' => current_url(),
-                            'button_name' => 'save',
+                            'caption'      => 'Add Room Type',
+                            'action'       => current_url(),
+                            'button_name'  => 'save',
                             'button_title' => 'Add Room Type'
                         );
 
@@ -39,14 +43,14 @@ class Add_room_type extends Admin_Controller {
                                 'size' => '12',
                                 'attr' =>
                                 array(
-                                    'name' => array(
+                                    'name'        => array(
                                         'title' => 'Name',
-                                        'type' => 'text',
+                                        'type'  => 'text',
                                         'value' => $this->form_validation->set_value('name'),
                                     ),
                                     'description' => array(
                                         'title' => 'Description',
-                                        'type' => 'text',
+                                        'type'  => 'text',
                                         'value' => $this->form_validation->set_value('description'),
                                     ),
                                 )
@@ -54,15 +58,17 @@ class Add_room_type extends Admin_Controller {
                         );
 
                         $this->template['form'] = $this->_render_page('admin/_templates/form', array(
-                            'my_form' => $my_form,
+                            'my_form'         => $my_form,
                             'my_forms_inputs' => $my_inputs,
                                 ), TRUE);
-                } else {
+                }
+                else
+                {
                         $this->load->model('Room_type_model');
-                        $tmp = $this->Room_type_model->insert(array(
-                            'room_type_name' => $this->input->post('name', TRUE),
+                        $tmp                      = $this->Room_type_model->insert(array(
+                            'room_type_name'        => $this->input->post('name', TRUE),
                             'room_type_description' => $this->input->post('description', TRUE),
-                            'user_id' => $this->ion_auth->user()->row()->id
+                            'user_id'               => $this->ion_auth->user()->row()->id
                         ));
                         $this->template['result'] = ($tmp) ? 'Added' : 'Failed';
                 }

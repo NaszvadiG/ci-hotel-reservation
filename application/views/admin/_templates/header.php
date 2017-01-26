@@ -12,7 +12,7 @@ const SUB_NUMBER = 2; //base_url 0,
 const MENU_ITEM_DEFAULT = 'home';
 const HOME_REDIRECT = 'admin/'; // sample    admin/
 
-$main_sub = '';
+$main_sub   = '';
 /**
  * navigation
  */
@@ -22,22 +22,27 @@ $menu_items = $navigations;
 // Determine the current menu item.
 $menu_current = MENU_ITEM_DEFAULT;
 // If there is a query for a specific menu item and that menu item exists...
-if (@array_key_exists($this->uri->segment(SUB_NUMBER), $menu_items)) {
-    $menu_current = $this->uri->segment(SUB_NUMBER);
+if (@array_key_exists($this->uri->segment(SUB_NUMBER), $menu_items))
+{
+        $menu_current = $this->uri->segment(SUB_NUMBER);
 }
-if (MENU_ITEM_DEFAULT == $menu_current) {
-    foreach ($menu_items as $key => $item) {
-        if (isset($item['sub'])) {
-            if (@array_key_exists($this->uri->segment(SUB_NUMBER), $item['sub'])) {
-                $main_sub = $key;
-                $menu_current = $this->uri->segment(SUB_NUMBER);
-                break;
-            }
+if (MENU_ITEM_DEFAULT == $menu_current)
+{
+        foreach ($menu_items as $key => $item)
+        {
+                if (isset($item['sub']))
+                {
+                        if (@array_key_exists($this->uri->segment(SUB_NUMBER), $item['sub']))
+                        {
+                                $main_sub     = $key;
+                                $menu_current = $this->uri->segment(SUB_NUMBER);
+                                break;
+                        }
+                }
         }
-    }
 }
 
-$label = html_escape(((isset($menu_items[$menu_current]['label'])) ? $menu_items[$menu_current]['label'] : $menu_items[$main_sub]['label']));
+$label     = html_escape(((isset($menu_items[$menu_current]['label'])) ? $menu_items[$menu_current]['label'] : $menu_items[$main_sub]['label']));
 $sub_label = html_escape(((isset($menu_items[$menu_current]['label'])) ? '' : $menu_items[$main_sub]['sub'][$this->uri->segment(SUB_NUMBER)]['label']));
 ?>
 <!DOCTYPE html>
@@ -94,36 +99,41 @@ $sub_label = html_escape(((isset($menu_items[$menu_current]['label'])) ? '' : $m
                 /**
                  * navigations
                  */
-                foreach ($menu_items as $key => $item) {
-                    if (isset($item['sub'])) {
-                        //sub menu
-                        $active1 = ($key == $main_sub ? ' active' : '');
-                        echo '<li class="parent' . $active1 . '">';
-                        echo '<a href="#">';
-                        echo '<span data-toggle="collapse" href="#sub-item-' . $key . '">';
-                        echo '<svg class="glyph stroked ' . str_replace('-', ' ', $item['icon']) . '"><use xlink:href="#stroked-' . $item['icon'] . '"/></svg>';
-                        echo '</span>';
-                        echo $item['label'];
-                        echo '</a>';
-                        //start sub menu 
-                        echo '<ul class="children collapse" id="sub-item-' . $key . '">';
-                        foreach ($item['sub'] as $sub_key => $sub_item) {
-                            echo '<li>'
-                            . '<a href="' . base_url(SUB_FOLDER . $sub_key) . '">'
-                            . '<svg class="glyph stroked download"><use xlink:href="#stroked-' . $sub_item['icon'] . '"/></svg> '
-                            . $sub_item['label'] . '</a>'
-                            . '</li>';
+                foreach ($menu_items as $key => $item)
+                {
+                        if (isset($item['sub']))
+                        {
+                                //sub menu
+                                $active1 = ($key == $main_sub ? ' active' : '');
+                                echo '<li class="parent' . $active1 . '">';
+                                echo '<a href="#">';
+                                echo '<span data-toggle="collapse" href="#sub-item-' . $key . '">';
+                                echo '<svg class="glyph stroked ' . str_replace('-', ' ', $item['icon']) . '"><use xlink:href="#stroked-' . $item['icon'] . '"/></svg>';
+                                echo '</span>';
+                                echo $item['label'];
+                                echo '</a>';
+                                //start sub menu 
+                                echo '<ul class="children collapse" id="sub-item-' . $key . '">';
+                                foreach ($item['sub'] as $sub_key => $sub_item)
+                                {
+                                        echo '<li>'
+                                        . '<a href="' . base_url(SUB_FOLDER . $sub_key) . '">'
+                                        . '<svg class="glyph stroked download"><use xlink:href="#stroked-' . $sub_item['icon'] . '"/></svg> '
+                                        . $sub_item['label'] . '</a>'
+                                        . '</li>';
+                                }
+                                echo '</ul>';
+                                echo '</li>';
                         }
-                        echo '</ul>';
-                        echo '</li>';
-                    } else {
-                        $active = ($key == $menu_current ? ' class="active"' : '');
-                        echo '<li' . $active . '>'
-                        . '<a href="' . base_url(SUB_FOLDER . $key) . '">'
-                        . '<svg class="glyph stroked ' . str_replace('-', ' ', $item['icon']) . '"><use xlink:href="#stroked-' . $item['icon'] . '"/></svg> '
-                        . $item['label'] . '</a>'
-                        . '</li>';
-                    }
+                        else
+                        {
+                                $active = ($key == $menu_current ? ' class="active"' : '');
+                                echo '<li' . $active . '>'
+                                . '<a href="' . base_url(SUB_FOLDER . $key) . '">'
+                                . '<svg class="glyph stroked ' . str_replace('-', ' ', $item['icon']) . '"><use xlink:href="#stroked-' . $item['icon'] . '"/></svg> '
+                                . $item['label'] . '</a>'
+                                . '</li>';
+                        }
                 }
                 ?>
             </ul>
@@ -145,7 +155,7 @@ $sub_label = html_escape(((isset($menu_items[$menu_current]['label'])) ? '' : $m
                         <?php
                         // echo now('Asia/Manila');
                         $datestring = '%Y %m %d - %D %h:%i %a';
-                        $time = time();
+                        $time       = time();
                         echo mdate($datestring, $time);
                         ?>
                     </li>

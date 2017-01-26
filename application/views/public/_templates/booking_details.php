@@ -26,12 +26,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <strong>Child:</strong>
                     <span><?php echo $this->session->userdata('child_count'); ?></span>
                 </div>
-                
+
                 <?php if ($this->session->userdata('email')): ?>
 
                         <div class="mg-widget-cart-row">
                             <strong>Fullname:</strong>
-                            <span><?php echo $this->session->userdata('lastname').', '.$this->session->userdata('firstname'); ?></span>
+                            <span><?php echo $this->session->userdata('lastname') . ', ' . $this->session->userdata('firstname'); ?></span>
                         </div>
                         <div class="mg-widget-cart-row">
                             <strong>Email:</strong>
@@ -41,9 +41,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <strong>Phone:</strong>
                             <span><?php echo $this->session->userdata('phone'); ?></span>
                         </div>
-                
+
                 <?php endif; ?>
-                
+
                 <div class="mg-cart-total">
                     <strong>Total:</strong>
                     <span>

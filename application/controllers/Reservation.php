@@ -2,16 +2,18 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Reservation extends Public_Controller {
+class Reservation extends Public_Controller
+{
 
 
         protected $session_names_;
         protected $data;
         protected $template;
 
-        public function __construct() {
+        public function __construct()
+        {
                 parent::__construct();
-                $this->session_names_ = array(
+                $this->session_names_  = array(
                     'room_id',
                     //check in                
                     'check_in',
@@ -41,8 +43,9 @@ class Reservation extends Public_Controller {
                 $this->data['message'] = '';
         }
 
-        private function _render_reservation_template($template__, $data_) {
-                $this->data['title_top'] = get_class();
+        private function _render_reservation_template($template__, $data_)
+        {
+                $this->data['title_top']      = get_class();
                 $this->data['title_top_desc'] = 'my desc';
                 $template['image_top_header'] = $this->_render_page('public/_templates/image_top_header', $this->data, TRUE);
 
@@ -50,32 +53,41 @@ class Reservation extends Public_Controller {
                 $this->_render_public_page(get_class(), $this, 'public/reservation', $template);
         }
 
-        private function booking_details() {
-                $this->data['room'] = $this->Room_model->where(array('room_id' => $this->session->userdata('room_id')))->with_room_type()->as_object()->get();
+        private function booking_details()
+        {
+                $this->data['room']            = $this->Room_model->where(array('room_id' => $this->session->userdata('room_id')))->with_room_type()->as_object()->get();
                 $this->data['booking_details'] = $this->_render_page('public/_templates/booking_details', $this->data, TRUE);
         }
 
-        private function check_room_session() {
-                if ($this->session->has_userdata('room_id')) {
+        private function check_room_session()
+        {
+                if ($this->session->has_userdata('room_id'))
+                {
                         
-                } else {
+                }
+                else
+                {
                         show_error('Room is unavailable or not exist.');
                 }
         }
 
-        private function unset_sessions_() {
+        private function unset_sessions_()
+        {
                 $this->session->unset_userdata($this->session_names_);
         }
 
-        private function validate_page_($page) {
-                switch ($page) {
+        private function validate_page_($page)
+        {
+                switch ($page)
+                {
                         default :
                         case 1://select room
                                 $this->unset_sessions_();
                                 break;
                         case 2://check in
 
-                                if (!$this->input->get('room-id')) {
+                                if (!$this->input->get('room-id'))
+                                {
                                         show_error('Missing Parameter.');
                                 }
                                 $room_id_ = $this->input->get('room-id');
@@ -85,10 +97,13 @@ class Reservation extends Public_Controller {
                                  * check if room_id is exist, then check if available
                                  * 
                                  */
-                                if (TRUE) {
+                                if (TRUE)
+                                {
                                         $this->data['room_id'] = $room_id_;
                                         $this->session->set_userdata('room_id', $room_id_);
-                                } else {
+                                }
+                                else
+                                {
                                         show_error('Romm is unavailable or not exist.');
                                 }
                                 break;
@@ -107,7 +122,8 @@ class Reservation extends Public_Controller {
 
         #1 | select room
 
-        public function index() {
+        public function index()
+        {
                 $this->validate_page_(1);
 
 
@@ -119,7 +135,8 @@ class Reservation extends Public_Controller {
 
         #2
 
-        public function check_in() {
+        public function check_in()
+        {
                 $this->validate_page_(2);
                 $this->form_validation->set_rules(array(
                     array(
@@ -144,15 +161,18 @@ class Reservation extends Public_Controller {
                     ),
                 ));
 
-                if ($this->form_validation->run()) {
+                if ($this->form_validation->run())
+                {
                         $this->session->set_userdata(array(
-                            'check_in' => $this->input->post('check_in', TRUE),
-                            'check_out' => $this->input->post('check_out', TRUE),
+                            'check_in'    => $this->input->post('check_in', TRUE),
+                            'check_out'   => $this->input->post('check_out', TRUE),
                             'adult_count' => $this->input->post('adult_count', TRUE),
                             'child_count' => $this->input->post('child_count', TRUE)
                         ));
                         redirect(base_url('reservation/personal-info'), 'refresh');
-                } else {
+                }
+                else
+                {
                         $this->data['message'] = validation_errors();
                 }
 
@@ -161,7 +181,8 @@ class Reservation extends Public_Controller {
 
         #3
 
-        public function personal_info() {
+        public function personal_info()
+        {
                 $this->validate_page_(3);
                 $this->form_validation->set_rules(array(
                     array(
@@ -186,15 +207,18 @@ class Reservation extends Public_Controller {
                     ),
                 ));
 
-                if ($this->form_validation->run()) {
+                if ($this->form_validation->run())
+                {
                         $this->session->set_userdata(array(
                             'firstname' => $this->input->post('firstname', TRUE),
-                            'lastname' => $this->input->post('lastname', TRUE),
-                            'email' => $this->input->post('email', TRUE),
-                            'phone' => $this->input->post('phone', TRUE)
+                            'lastname'  => $this->input->post('lastname', TRUE),
+                            'email'     => $this->input->post('email', TRUE),
+                            'phone'     => $this->input->post('phone', TRUE)
                         ));
                         redirect(base_url('reservation/payment'), 'refresh');
-                } else {
+                }
+                else
+                {
                         $this->data['message'] = validation_errors();
                 }
 
@@ -205,7 +229,8 @@ class Reservation extends Public_Controller {
 
         #4
 
-        public function payment() {
+        public function payment()
+        {
                 $this->validate_page_(4);
                 $this->form_validation->set_rules(array(
                     array(
@@ -230,15 +255,18 @@ class Reservation extends Public_Controller {
                     ),
                 ));
 
-                if ($this->form_validation->run()) {
+                if ($this->form_validation->run())
+                {
                         $this->session->set_userdata(array(
-                            'card_number' => $this->input->post('card_number', TRUE),
-                            'card_cvv' => $this->input->post('card_cvv', TRUE),
+                            'card_number'       => $this->input->post('card_number', TRUE),
+                            'card_cvv'          => $this->input->post('card_cvv', TRUE),
                             'card_expire_month' => $this->input->post('card_expire_month', TRUE),
-                            'card_expire_year' => $this->input->post('card_expire_year', TRUE)
+                            'card_expire_year'  => $this->input->post('card_expire_year', TRUE)
                         ));
                         redirect(base_url('reservation/thank-you'), 'refresh');
-                } else {
+                }
+                else
+                {
                         $this->data['message'] = validation_errors();
                 }
                 $this->booking_details();
@@ -248,18 +276,21 @@ class Reservation extends Public_Controller {
 
         #5
 
-        public function thank_you()                 
+        public function thank_you()
         {
                 $this->validate_page_(5);
                 $this->load->helper('string');
-                $payment_id = '#' . random_string('unique');
+                $payment_id               = '#' . random_string('unique');
                 $this->data['payment_id'] = $payment_id;
-                $this->data['room'] = $this->Room_model->where(array('room_id' => $this->session->userdata('room_id')))->with_room_type()->as_object()->get();
+                $this->data['room']       = $this->Room_model->where(array('room_id' => $this->session->userdata('room_id')))->with_room_type()->as_object()->get();
 
 
-                if ($this->save_reservation()) {
+                if ($this->save_reservation())
+                {
                         $this->data['result_'] = '<h3 class="mg-alert-payment">' . $this->config->item('success_reservation') . '</h3>';
-                } else {
+                }
+                else
+                {
                         $this->data['result_'] = '<h3 class="mg-alert-payment">' . $this->config->item('failed_reservation') . '</h3>';
                 }
 
@@ -267,17 +298,22 @@ class Reservation extends Public_Controller {
                 $this->unset_sessions_();
         }
 
-        private function save_reservation() {
-                foreach ($this->session_names_ as $k => $v) {
-                        if (!$this->session->has_userdata($v)) {
+        private function save_reservation()
+        {
+                foreach ($this->session_names_ as $k => $v)
+                {
+                        if (!$this->session->has_userdata($v))
+                        {
                                 return FALSE;
                         }
                 }
                 return TRUE;
         }
 
-        public function resources($bootstrap_dir = NULL) {
-                if (is_null($bootstrap_dir)) {
+        public function resources($bootstrap_dir = NULL)
+        {
+                if (is_null($bootstrap_dir))
+                {
                         show_404();
                 }
                 return '<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic|Playfair+Display:400,400italic,700,700italic,900,900italic" rel="stylesheet" type="text/css">
@@ -308,8 +344,10 @@ class Reservation extends Public_Controller {
                         <script src="' . $bootstrap_dir . 'js/modernizr.custom.min.js"></script>';
         }
 
-        public function resources_footer($bootstrap_dir = NULL) {
-                if (is_null($bootstrap_dir)) {
+        public function resources_footer($bootstrap_dir = NULL)
+        {
+                if (is_null($bootstrap_dir))
+                {
                         show_404();
                 }
                 return '<!-- jQuery (necessary for Bootstrap\'s JavaScript plugins) -->

@@ -20,23 +20,23 @@ $bootstrap_dir = base_url($bootstrap_dir);
                         <p><?php echo $this->config->item('footer_social_media') ?></p>
                         <ul class="mg-footer-social">
                             <?php if ($this->config->item('footer_facebook')): ?>
-                                <li><a href="<?php echo $this->config->item('footer_facebook') ?>"><i class="fa fa-facebook"></i></a></li>
+                                    <li><a href="<?php echo $this->config->item('footer_facebook') ?>"><i class="fa fa-facebook"></i></a></li>
                             <?php endif; ?>
 
                             <?php if ($this->config->item('footer_twitter')): ?>
-                                <li><a href="<?php echo $this->config->item('footer_twitter') ?>"><i class="fa fa-twitter"></i></a></li>
+                                    <li><a href="<?php echo $this->config->item('footer_twitter') ?>"><i class="fa fa-twitter"></i></a></li>
                             <?php endif; ?>
 
                             <?php if ($this->config->item('footer_pinterest')): ?>
-                                <li><a href="<?php echo $this->config->item('footer_pinterest') ?>"><i class="fa fa-pinterest"></i></a></li>
+                                    <li><a href="<?php echo $this->config->item('footer_pinterest') ?>"><i class="fa fa-pinterest"></i></a></li>
                             <?php endif; ?>
 
                             <?php if ($this->config->item('footer_google_plus')): ?>
-                                <li><a href="<?php echo $this->config->item('footer_google_plus') ?>"><i class="fa fa-google-plus"></i></a></li>
+                                    <li><a href="<?php echo $this->config->item('footer_google_plus') ?>"><i class="fa fa-google-plus"></i></a></li>
                             <?php endif; ?>
 
                             <?php if ($this->config->item('footer_rss')): ?>
-                                <li><a href="<?php echo $this->config->item('footer_rss') ?>"><i class="fa fa-rss"></i></a></li>
+                                    <li><a href="<?php echo $this->config->item('footer_rss') ?>"><i class="fa fa-rss"></i></a></li>
                             <?php endif; ?>
                         </ul>
                     </div>
@@ -51,7 +51,7 @@ $bootstrap_dir = base_url($bootstrap_dir);
                 <div class="col-md-6">
                     <ul class="mg-footer-nav">
                         <?php foreach ($navigations as $k => $v): ?>
-                            <li><a href="<?php echo base_url($k); ?>"><?php echo $v; ?></a></li>
+                                <li><a href="<?php echo base_url($k); ?>"><?php echo $v; ?></a></li>
                         <?php endforeach; ?>
                     </ul>
                 </div>

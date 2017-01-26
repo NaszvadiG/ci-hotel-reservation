@@ -6,7 +6,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <div class="alert alert-success alert-dismissible clearfix">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <div class="mg-alert-icon"><i class="fa fa-check"></i></div>
-       <?php echo $result_; ?>
+        <?php echo $result_; ?>
     </div>
     <div class="mg-cart-container mg-paid">
         <aside class="mg-widget mt50" id="mg-room-cart">
