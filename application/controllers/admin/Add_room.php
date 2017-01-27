@@ -32,7 +32,7 @@ class Add_room extends Admin_Controller
                     array(
                         'label' => 'Number',
                         'field' => 'number',
-                        'rules' => 'required'
+                        'rules' => 'required|is_natural_no_zero|is_unique[room.room_number]'
                     ),
                     array(
                         'label' => 'Description',
@@ -42,7 +42,7 @@ class Add_room extends Admin_Controller
                     array(
                         'label' => 'Price',
                         'field' => 'price',
-                        'rules' => 'required'
+                        'rules' => 'required|decimal'
                     ),
                     array(
                         'label' => 'Type',
@@ -52,7 +52,7 @@ class Add_room extends Admin_Controller
                     array(
                         'label' => 'Bed Count',
                         'field' => 'bed',
-                        'rules' => 'required'
+                        'rules' => 'required|is_natural_no_zero'
                     ),
                 ));
                 if (empty($_FILES['upload_image_file']['name']))

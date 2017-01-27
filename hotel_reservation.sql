@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jan 20, 2017 at 03:11 PM
+-- Generation Time: Jan 27, 2017 at 03:05 AM
 -- Server version: 10.1.19-MariaDB
 -- PHP Version: 5.6.24
 
@@ -74,6 +74,33 @@ CREATE TABLE `logs` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `reservation`
+--
+
+CREATE TABLE `reservation` (
+  `reservation_id` int(11) NOT NULL,
+  `room_id` int(11) NOT NULL,
+  `reservation_check_in` varchar(50) NOT NULL,
+  `reservation_check_out` varchar(50) NOT NULL,
+  `reservation_adult_count` int(11) NOT NULL,
+  `reservation_child_count` int(11) NOT NULL,
+  `reservation_firstname` varchar(50) NOT NULL,
+  `reservation_lastname` varchar(50) NOT NULL,
+  `reservation_email` varchar(50) NOT NULL,
+  `reservation_phone` varchar(50) NOT NULL,
+  `reservation_card_number` varchar(50) NOT NULL,
+  `reservation_card_cvv` varchar(50) NOT NULL,
+  `reservation_card_expire_month` varchar(50) NOT NULL,
+  `reservation_card_expire_year` varchar(50) NOT NULL,
+  `reservation_payment_id` varchar(50) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `deleted_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `room`
 --
 
@@ -83,7 +110,7 @@ CREATE TABLE `room` (
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `deleted_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `user_id` int(11) NOT NULL,
-  `room_price` int(11) NOT NULL,
+  `room_price` double NOT NULL,
   `room_description` varchar(500) NOT NULL,
   `room_number` int(11) NOT NULL,
   `room_bed_count` int(11) NOT NULL,
@@ -146,7 +173,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `company`, `phone`) VALUES
-(1, '127.0.0.1', 'administrator', '$2a$07$SeBknntpZror9uyftVopmu61qg0ms8Qv1yV6FG.kQOSM.9QhmTo36', '', 'admin@admin.com', '', NULL, NULL, 'VxQ/gJPJeRDvEKEsz5eTu.', 1268889823, 1484898861, 1, 'Admin', 'istrator', 'ADMIN', '0');
+(1, '127.0.0.1', 'administrator', '$2a$07$SeBknntpZror9uyftVopmu61qg0ms8Qv1yV6FG.kQOSM.9QhmTo36', '', 'admin@admin.com', '', NULL, NULL, 'VxQ/gJPJeRDvEKEsz5eTu.', 1268889823, 1485482711, 1, 'Admin', 'istrator', 'ADMIN', '0');
 
 -- --------------------------------------------------------
 
@@ -191,10 +218,17 @@ ALTER TABLE `logs`
   ADD PRIMARY KEY (`id`,`ip_address`,`user_agent`);
 
 --
+-- Indexes for table `reservation`
+--
+ALTER TABLE `reservation`
+  ADD PRIMARY KEY (`reservation_id`);
+
+--
 -- Indexes for table `room`
 --
 ALTER TABLE `room`
-  ADD PRIMARY KEY (`room_id`);
+  ADD PRIMARY KEY (`room_id`),
+  ADD UNIQUE KEY `room_number` (`room_number`);
 
 --
 -- Indexes for table `room_type`
@@ -230,12 +264,17 @@ ALTER TABLE `groups`
 -- AUTO_INCREMENT for table `login_attempts`
 --
 ALTER TABLE `login_attempts`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `logs`
 --
 ALTER TABLE `logs`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `reservation`
+--
+ALTER TABLE `reservation`
+  MODIFY `reservation_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `room`
 --

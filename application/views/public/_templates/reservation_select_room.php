@@ -19,7 +19,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <a href="#"><img src="<?php echo base_url($this->config->item('room_image_dir') . $room->room_image); ?>" alt="" class="img-responsive"></a>
                                 </div>
                                 <div class="col-sm-7">
-                                    <h3 class="mg-avl-room-title"><a href="#"><?php echo $room->room_type->room_type_name; ?></a> <span><?php echo $this->config->item('currency') . $room->room_price; ?><sup>.00</sup>/Night</span></h3>
+                                    <h3 class="mg-avl-room-title"><a href="#"><?php echo $room->room_type->room_type_name; ?></a>
+                                        <?php
+                                        list($price_1, $price_2) = explode('.', $room->room_price);
+                                        ?>
+                                        <span><?php echo $this->config->item('currency') . number_format($price_1); ?><sup>.<?php echo $price_2; ?></sup>/Night</span></h3>
                                     <p><?php echo $room->room_description; ?></p>
                                     <div class="row mg-room-fecilities">
                                         <div class="col-sm-6">

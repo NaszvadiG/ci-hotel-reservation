@@ -2,49 +2,36 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Room_model extends MY_Model
+class Reservation_model extends MY_Model
 {
 
         public function __construct()
         {
-                $this->table            = 'room';
-                $this->primary_key      = 'room_id';
+                $this->table           = 'reservation';
+                $this->primary_key     = 'reservation_id';
                 //   $this->soft_deletes = true;
                 // $this->has_one['details'] = 'User_model';
                 # $this->has_one['user'] = array('User_model', 'user_id', 'id');
-                $this->has_one['users'] = array(
-                    'foreign_model' => 'User_model',
-                    'foreign_table' => 'users',
-                    'foreign_key'   => 'id',
-                    'local_key'     => 'user_id'
-                );
-
-                $this->has_one['room_type'] = array(
-                    'foreign_model' => 'Room_type_model',
-                    'foreign_table' => 'room_type',
-                    'foreign_key'   => 'room_type_id',
-                    'local_key'     => 'room_type_id'
-                );
-                
-                $this->has_one['reservation'] = array(
-                    'foreign_model' => 'Reservation_model',
-                    'foreign_table' => 'reservation',
+                $this->has_one['room'] = array(
+                    'foreign_model' => 'Room_model',
+                    'foreign_table' => 'room',
                     'foreign_key'   => 'room_id',
                     'local_key'     => 'room_id'
                 );
+                // $this->has_one['room'] = 'Room_model';
                 // $this->has_one['details'] = array('local_key' => 'user_id', 'foreign_key' => 'user_id', 'foreign_model' => 'User_model');
                 // $this->has_many['posts'] = 'Post_model';
                 ///------------------------
                 // you can set the database connection that you want to use for this particular model, by passing the group connection name or a config array. By default will use the default connection
                 //  $this->_database_connection = 'special_connection';
                 // you can disable the use of timestamps. This way, MY_Model won't try to set a created_at and updated_at value on create methods. Also, if you pass it an array as calue, it tells MY_Model, that the first element is a created_at field type, the second element is a updated_at field type (and the third element is a deleted_at field type if $this->soft_deletes is set to TRUE)
-                $this->timestamps           = TRUE;
+                $this->timestamps      = TRUE;
 
                 // you can enable (TRUE) or disable (FALSE) the "soft delete" on records. Default is FALSE, which means that when you delete a row, that one is gone forever
                 $this->soft_deletes = FALSE;
 
                 // you can set how the model returns you the result: as 'array' or as 'object'. the default value is 'object'
-                $this->return_as = 'object' | 'array';
+                $this->return_as = 'object';
 
                 // you can set relationships between tables
                 //$this->has_one['...'] allows establishing ONE TO ONE or more ONE TO ONE relationship(s) between models/tables

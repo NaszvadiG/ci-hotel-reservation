@@ -47,8 +47,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <div class="mg-cart-total">
                     <strong>Total:</strong>
                     <span>
-                        <?php echo $this->config->item('currency') ?>
-                        <?php echo number_format((different_days_($this->session->userdata('check_in'), $this->session->userdata('check_out')) * $room->room_price)); ?>
+                        <?php
+                        echo $this->config->item('currency') .
+                        number_format(
+                                different_days_($this->session->userdata('check_in'), $this->session->userdata('check_out')) * $room->room_price
+                        );
+                        ?>
                     </span>
                 </div>
             </div>

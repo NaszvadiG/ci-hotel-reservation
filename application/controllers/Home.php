@@ -17,7 +17,7 @@ class Home extends Public_Controller
                 $this->data['rooms'] = $this->Room_model->where(array('room_active' => TRUE, 'room_best' => TRUE))->with_room_type()->as_object()->get_all();
 
                 $this->template['slider']     = $this->_render_page('public/_templates/slider', $this->data, TRUE);
-                $this->template['index_room'] = $this->_render_page('public/_templates/index_room', $this->data, TRUE);
+                $this->template['index_room'] = $this->_render_page('public/_templates/best_room', $this->data, TRUE);
 
                 $this->_render_public_page(get_class(), $this, 'public/home', $this->template);
         }

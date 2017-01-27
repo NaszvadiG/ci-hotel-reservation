@@ -12,9 +12,19 @@ class Room_type_model extends MY_Model
                 //   $this->soft_deletes = true;
                 // $this->has_one['details'] = 'User_model';
                 # $this->has_one['user'] = array('User_model', 'user_id', 'id');
-                $this->has_one['users'] = array('foreign_model' => 'User_model', 'foreign_table' => 'users', 'foreign_key' => 'id', 'local_key' => 'user_id');
+                $this->has_one['users'] = array(
+                    'foreign_model' => 'User_model',
+                    'foreign_table' => 'users',
+                    'foreign_key'   => 'id',
+                    'local_key'     => 'user_id'
+                );
 
-                $this->has_one['room'] = array('foreign_model' => 'Room_model', 'foreign_table' => 'room', 'foreign_key' => 'room_type_id', 'local_key' => 'room_type_id');
+                $this->has_one['room'] = array(
+                    'foreign_model' => 'Room_model',
+                    'foreign_table' => 'room',
+                    'foreign_key'   => 'room_type_id',
+                    'local_key'     => 'room_type_id'
+                );
                 // $this->has_one['details'] = array('local_key' => 'user_id', 'foreign_key' => 'user_id', 'foreign_model' => 'User_model');
                 // $this->has_many['posts'] = 'Post_model';
                 ///------------------------

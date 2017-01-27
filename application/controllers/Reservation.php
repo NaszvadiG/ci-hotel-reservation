@@ -124,12 +124,52 @@ class Reservation extends Public_Controller
 
         public function index()
         {
+                $this->load->model('Reservation_model');
                 $this->validate_page_(1);
 
+                //select room 
+                $room_obj = $this->Room_model->where(array(
+                            'room_active' => TRUE,
+                        ))
+                        ->with_room_type()
+//                        ->with_reservation(
+//                                'fields:room_id', 'where:`reservation`.`reservation_check_in`>=' . time()
+//                        )
+                        ->as_object()
+                        ->get_all();
 
-                //select room
-                $this->data['rooms'] = $this->Room_model->where(array('room_active' => TRUE))->with_room_type()->as_object()->get_all();
+                $room = array();
 
+                if ($room_obj)
+                {
+                        foreach ($room_obj as $v)
+                        {
+                                $reser_obj = $this->Reservation_model->where('room_id', $v->room_id)->as_object()->get_all();
+
+                                $avail = TRUE;
+                                if ($reser_obj)
+                                {
+                                        foreach ($reser_obj as $v_)
+                                        {
+                                                $in       = $v_->reservation_check_in;
+                                                $out      = $v_->reservation_check_out;
+                                                $current_ = time();
+
+                                                if (!($in < $current_ && $out < $current_))
+                                                {
+                                                        $avail = FALSE;
+                                                        continue;
+                                                }
+                                        }
+                                }
+                                if ($avail)
+                                {
+                                        $room[] = $v;
+                                }
+                        }
+                }
+
+                $this->data['rooms'] = (object) $room;
                 $this->_render_reservation_template('public/_templates/reservation_select_room', $this->data);
         }
 
@@ -285,7 +325,7 @@ class Reservation extends Public_Controller
                 $this->data['room']       = $this->Room_model->where(array('room_id' => $this->session->userdata('room_id')))->with_room_type()->as_object()->get();
 
 
-                if ($this->save_reservation())
+                if ($this->save_reservation($payment_id))
                 {
                         $this->data['result_'] = '<h3 class="mg-alert-payment">' . $this->config->item('success_reservation') . '</h3>';
                 }
@@ -298,16 +338,53 @@ class Reservation extends Public_Controller
                 $this->unset_sessions_();
         }
 
-        private function save_reservation()
+        private function save_reservation($payment_id)
         {
                 foreach ($this->session_names_ as $k => $v)
                 {
                         if (!$this->session->has_userdata($v))
                         {
-                                return FALSE;
+                                //when one of the session is none
+                                log_message('error', 'session name: ' . $v . ' not exist');
+                                show_error('Invalid process.');
                         }
                 }
-                return TRUE;
+                $data_to_be_insert = array();
+                foreach ($this->session_names_ as $k => $v)
+                {
+                        $v = (string) $v;
+
+                        switch ($v)
+                        {
+                                case 'room_id':
+                                        /**
+                                         * this is foreign column in table
+                                         */
+                                        $data_to_be_insert[$v]                  = $this->session->userdata($v);
+                                        break;
+                                case 'check_in':
+                                case 'check_out':
+                                        /**
+                                         * converting first for easy track reservation in the future using unix time
+                                         */
+                                        $data_to_be_insert['reservation_' . $v] = my_human_to_unix_conveter_($this->session->userdata($v));
+                                        break;
+                                default:
+                                        /**
+                                         * save normally in current table 
+                                         */
+                                        $data_to_be_insert['reservation_' . $v] = $this->session->userdata($v);
+                                        break;
+                        }
+                }
+
+                /**
+                 * payment_id is not save in session so i just not include in the loop session names.
+                 */
+                $data_to_be_insert['reservation_payment_id'] = $payment_id;
+
+                $this->load->model('Reservation_model');
+                return $this->Reservation_model->insert($data_to_be_insert);
         }
 
         public function resources($bootstrap_dir = NULL)

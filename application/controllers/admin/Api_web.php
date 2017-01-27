@@ -43,7 +43,7 @@ class Api_web extends Admin_Controller
                 $data = array();
                 $this->load->model('Room_model');
 
-                $obj = $this->Room_model->with_users()->with_room_type()->as_object()->get_all();
+                $obj = $this->Room_model->order_by('room_number')->with_users()->with_room_type()->as_object()->get_all();
 
 
                 foreach ($obj as $v)
@@ -54,9 +54,10 @@ class Api_web extends Admin_Controller
                             'width' => '80',
                             'title' => 'room number ' . $v->room_number,
                         );
+                        list($p1, $p2) = explode('.', $v->room_price);
                         $data[]           = array(
                             'room_image'         => img($image_properties),
-                            'room_price'         => $this->config->item('currency') . $v->room_price,
+                            'room_price'         => $this->config->item('currency') . number_format($p1) . '.' . $p2,
                             'room_description'   => $v->room_description,
                             'room_number'        => $v->room_number,
                             'room_bed_count'     => $v->room_bed_count,
@@ -88,6 +89,36 @@ class Api_web extends Admin_Controller
                             'description' => $v->room_type_description,
                             'active'      => anchor(base_url('admin/room-types/change-status/' . $v->room_type_id), $this->to_readable_active($v->room_type_active)),
                             'user'        => $v->users->last_name . ', ' . $v->users->first_name
+                        );
+                }
+                $this->_render_json_view($data);
+        }
+
+        public function reservations()
+        {
+                $data = array();
+
+                $this->load->model(array('Reservation_model', 'Room_type_model'));
+                $obj = $this->Reservation_model
+                        ->with_room()
+                        ->as_object()
+                        ->get_all();
+
+                foreach ($obj as $v)
+                {
+                        $room_type_obj = $this->Room_type_model->as_object()->get($v->room->room_type_id);
+                        $data[]        = array(
+                            'payment_id'  => $v->reservation_payment_id,
+                            'room_number' => $v->room->room_number,
+                            'room_type'   => $room_type_obj->room_type_name,
+                            'check_in'    => my_unix_to_human_conveter_($v->reservation_check_in),
+                            'check_out'   => my_unix_to_human_conveter_($v->reservation_check_out),
+                            'adult_count' => $v->reservation_adult_count,
+                            'child_count' => $v->reservation_child_count,
+                            'firstname'   => $v->reservation_firstname,
+                            'lastname'    => $v->reservation_lastname,
+                            'email'       => $v->reservation_email,
+                            'phone'       => $v->reservation_phone,
                         );
                 }
                 $this->_render_json_view($data);

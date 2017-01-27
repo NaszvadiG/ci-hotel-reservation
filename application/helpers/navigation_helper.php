@@ -23,32 +23,38 @@ if (!function_exists('admin_navigation'))
         function admin_navigation()
         {
                 return array(
-                    'home'       =>
+                    'home'        =>
                     array(
                         'label' => 'Home',
                         'desc'  => 'Dashboard Description',
                         'icon'  => 'dashboard-dial',
                     ),
-                    'rooms'      =>
+                    'reservations' =>
+                    array(
+                        'label' => 'Reservations',
+                        'desc'  => 'Reservation Description',
+                        'icon'  => 'app-window-with-content',
+                    ),
+                    'rooms'       =>
                     array(
                         'label' => 'Rooms',
                         'desc'  => 'Rooms Description',
                         'icon'  => 'app-window-with-content',
                     ),
-                    'room_types' =>
+                    'room_types'  =>
                     array(
                         'label' => 'Room Types',
                         'desc'  => 'Room Types Description',
                         'icon'  => 'app-window-with-content',
                     ),
-                    'users'      =>
+                    'users'       =>
                     array(
                         'label' => 'Users',
                         'desc'  => 'Users Description',
                         'icon'  => 'hourglass',
                     ),
                     //sub menu
-                    'add'        =>
+                    'add'         =>
                     array(
                         'label' => 'Add Data',
                         'icon'  => 'chevron-down',

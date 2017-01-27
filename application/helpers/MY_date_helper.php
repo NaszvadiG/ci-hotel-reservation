@@ -22,6 +22,65 @@ if (!function_exists('convert_date_'))
         }
 
 }
+if (!function_exists('my_human_to_unix_conveter_'))
+{
+
+        /**
+         * 
+         * @param string $date || 01/28/2015
+         * @return string unix time
+         */
+        function my_human_to_unix_conveter_($date)
+        {
+                list($m_, $d_, $y_) = explode('/', $date);
+
+                /**
+                 * date sample value: 2017-01-26
+                 */
+                $date_to_be_convert = $y_ . '-' . $m_ . '-' . $d_;
+
+
+                /**
+                 * sample value: 06:30 pm
+                 */
+                $current_time = mdate('%h:%i %a', time());
+
+
+                /**
+                 * sample value: 2017-01-26 06:16 PM
+                 */
+                $output = $date_to_be_convert . ' ' . $current_time;
+
+                return human_to_unix($output);
+        }
+
+}if (!function_exists('my_unix_to_human_conveter_'))
+{
+
+        /**
+         * 
+         * @param string $unix || 1485427200
+         * @return string human time | 28 Jan, 2015
+         */
+        function my_unix_to_human_conveter_($unix)
+        {
+                /**
+                 * sample value: 2017-01-26 06:16 PM
+                 */
+                $human_time = unix_to_human($unix);
+
+                list($date_, $time_, $am_pm_) = explode(' ', $human_time);
+
+                list($y_, $m_, $d_) = explode('-', $date_);
+
+
+                /**
+                 * sample value to convert: 01/28/2015
+                 */
+                return convert_date_($m_ . '/' . $d_ . '/' . $y_);
+        }
+
+}
 if (!function_exists('different_days_'))
 {
 
