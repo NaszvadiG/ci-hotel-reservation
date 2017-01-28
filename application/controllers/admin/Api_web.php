@@ -39,7 +39,6 @@ class Api_web extends Admin_Controller
 
         public function Rooms()
         {
-                $this->load->helper('html');
                 $data = array();
                 $this->load->model('Room_model');
 

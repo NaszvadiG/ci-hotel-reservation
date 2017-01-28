@@ -14,6 +14,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 /*
   | ---------------------------------
+  | slider info
+  | ---------------------------------
+  |
+  |
+  |
+  |
+  |
+ */
+//1st
+$config['first_sub_desc']  = '1st sub';
+//2nd
+$config['second_desc']     = '2nd decf';
+$config['second_sub_desc'] = '2nd sub desc';
+//3rd
+$config['third_desc']      = '3rd dexc';
+$config['third_sub_desc']  = '3rd sub dec';
+
+/*
+  | ---------------------------------
   | email reciever
   | ---------------------------------
   |

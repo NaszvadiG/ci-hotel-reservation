@@ -44,14 +44,14 @@ if (MENU_ITEM_DEFAULT == $menu_current)
 
 $label     = html_escape(((isset($menu_items[$menu_current]['label'])) ? $menu_items[$menu_current]['label'] : $menu_items[$main_sub]['label']));
 $sub_label = html_escape(((isset($menu_items[$menu_current]['label'])) ? '' : $menu_items[$main_sub]['sub'][$this->uri->segment(SUB_NUMBER)]['label']));
+echo doctype('html5');
 ?>
-<!DOCTYPE html>
 <html>
     <head>
         <meta charset="<?php echo $this->config->item('charset'); ?>">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title><?php echo ($sub_label != '') ? $sub_label : $label; ?> | <?php echo $this->config->item('public_name'); ?></title>
-        <link href="<?php echo base_url('assets/images/icon.png'); ?>" rel="shortcut icon" type="image/x-icon" />
+        <?php echo link_tag('assets/images/icon.png', 'shortcut icon', 'image/ico'); ?>
         <link href="<?php echo $bootstrap_dir; ?>css/bootstrap.min.css" rel="stylesheet">
         <link href="<?php echo $bootstrap_dir; ?>css/datepicker3.css" rel="stylesheet">
         <link href="<?php echo $bootstrap_dir; ?>css/styles.css" rel="stylesheet">

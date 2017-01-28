@@ -1,15 +1,15 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 $bootstrap_dir = base_url($bootstrap_dir);
+echo doctype('html5');
 ?>
-<!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="<?php echo $this->config->item('charset') ?>">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title><?php echo $title . ' | ' . $this->config->item('public_name'); ?></title> 
-        <link href="<?php echo base_url('assets/images/icon.png'); ?>" rel="shortcut icon" type="image/x-icon" />       
+        <title><?php echo $title . ' | ' . $this->config->item('public_name'); ?></title>  
+        <?php echo link_tag('assets/images/icon.png', 'shortcut icon', 'image/ico'); ?>
         <?php echo $controller->resources($bootstrap_dir); ?>
     </head>
     <body class="mg-boxed">

@@ -16,23 +16,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <div class="carousel-caption">
                 <img src="<?php echo $bootstrap_dir; ?>images/stars.png" alt="">
                 <h2>Welcome to <?php echo $this->config->item('public_name'); ?></h2>
-                <p>Cogitavisse erant puerilis utrum efficiantur adhuc expeteretur.</p>
+                <p><?php echo $this->config->item('first_sub_desc'); ?></p>
             </div>
         </div>
         <div class="item">
             <img src="<?php echo $bootstrap_dir; ?>images/slide-2.png" alt="...">
             <div class="carousel-caption">
                 <img src="<?php echo $bootstrap_dir; ?>images/stars.png" alt="">
-                <h2>Feel Like Your Home</h2>
-                <p>Cogitavisse erant puerilis utrum efficiantur adhuc expeteretur.</p>
+                <h2><?php echo $this->config->item('second_desc'); ?></h2>
+                <p><?php echo $this->config->item('second_sub_desc'); ?></p>
             </div>
         </div>
         <div class="item">
             <img src="<?php echo $bootstrap_dir; ?>images/slide-3.png" alt="...">
             <div class="carousel-caption">
                 <img src="<?php echo $bootstrap_dir; ?>images/stars.png" alt="">
-                <h2>Perfect Place for Dining</h2>
-                <p>Cogitavisse erant puerilis utrum efficiantur adhuc expeteretur.</p>
+                <h2><?php echo $this->config->item('third_desc'); ?></h2>
+                <p><?php echo $this->config->item('third_sub_desc'); ?></p>
             </div>
         </div>
     </div>
