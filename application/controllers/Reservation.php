@@ -9,11 +9,12 @@ class Reservation extends Public_Controller
         protected $session_names_;
         protected $data;
         protected $template;
+        private $current_timestampp_;
 
         public function __construct()
         {
                 parent::__construct();
-                $this->session_names_  = array(
+                $this->session_names_      = array(
                     'room_id',
                     //check in                
                     'check_in',
@@ -40,13 +41,14 @@ class Reservation extends Public_Controller
                 <span aria-hidden="true">&times;</span></button>
 		<i class="fa fa-question-circle"></i> ', ' </div>'
                 );
-                $this->data['message'] = '';
+                $this->data['message']     = '';
+                $this->current_timestampp_ = time();
         }
 
         private function _render_reservation_template($template__, $data_)
         {
                 $this->data['title_top']      = get_class();
-                $this->data['title_top_desc'] = 'my desc';
+                $this->data['title_top_desc'] = $this->config->item('reservation_page');
                 $template['image_top_header'] = $this->_render_page('public/_templates/image_top_header', $this->data, TRUE);
 
                 $template['form_template'] = $this->_render_page($template__, $data_, TRUE);
@@ -63,7 +65,10 @@ class Reservation extends Public_Controller
         {
                 if ($this->session->has_userdata('room_id'))
                 {
-                        
+                        if (!$this->check_room_availbility($this->session->userdata('room_id')))
+                        {
+                                show_error('Romm is unavailable or not exist.');
+                        }
                 }
                 else
                 {
@@ -97,10 +102,21 @@ class Reservation extends Public_Controller
                                  * check if room_id is exist, then check if available
                                  * 
                                  */
-                                if (TRUE)
+                                $tmp_room_obj = $this->Room_model->get($room_id_);
+
+                                //exist
+                                if ($tmp_room_obj)
                                 {
-                                        $this->data['room_id'] = $room_id_;
-                                        $this->session->set_userdata('room_id', $room_id_);
+                                        //avail
+                                        if ($this->check_room_availbility($room_id_))
+                                        {
+                                                $this->data['room_id'] = $room_id_;
+                                                $this->session->set_userdata('room_id', $room_id_);
+                                        }
+                                        else
+                                        {
+                                                show_error('Romm is unavailable or not exist.');
+                                        }
                                 }
                                 else
                                 {
@@ -122,19 +138,38 @@ class Reservation extends Public_Controller
 
         #1 | select room
 
-        public function index()
+        private function check_room_availbility($r_id)
         {
                 $this->load->model('Reservation_model');
-                $this->validate_page_(1);
+                $reser_obj = $this->Reservation_model
+                        ->where('room_id', $r_id)
+                        ->as_object()
+                        ->get_all();
+                if ($reser_obj)
+                {
+                        foreach ($reser_obj as $v_)
+                        {
+                                $in  = $v_->reservation_check_in;
+                                $out = $v_->reservation_check_out;
 
+                                if (!($in < $this->current_timestampp_ && $out < $this->current_timestampp_))
+                                {
+                                        return FALSE;
+                                }
+                        }
+                }
+
+                return TRUE;
+        }
+
+        public function index()
+        {
+                $this->validate_page_(1);
                 //select room 
                 $room_obj = $this->Room_model->where(array(
                             'room_active' => TRUE,
                         ))
-                        ->with_room_type()
-//                        ->with_reservation(
-//                                'fields:room_id', 'where:`reservation`.`reservation_check_in`>=' . time()
-//                        )
+                        ->with_room_type('fields:room_type_name,room_type_active', 'where:1=1')
                         ->as_object()
                         ->get_all();
 
@@ -144,25 +179,7 @@ class Reservation extends Public_Controller
                 {
                         foreach ($room_obj as $v)
                         {
-                                $reser_obj = $this->Reservation_model->where('room_id', $v->room_id)->as_object()->get_all();
-
-                                $avail = TRUE;
-                                if ($reser_obj)
-                                {
-                                        foreach ($reser_obj as $v_)
-                                        {
-                                                $in       = $v_->reservation_check_in;
-                                                $out      = $v_->reservation_check_out;
-                                                $current_ = time();
-
-                                                if (!($in < $current_ && $out < $current_))
-                                                {
-                                                        $avail = FALSE;
-                                                        continue;
-                                                }
-                                        }
-                                }
-                                if ($avail)
+                                if ($this->check_room_availbility($v->room_id))
                                 {
                                         $room[] = $v;
                                 }
@@ -245,6 +262,11 @@ class Reservation extends Public_Controller
                         'label' => 'Email',
                         'rules' => 'required|valid_email',
                     ),
+                    array(
+                        'field' => 'personal_info_check_box',
+                        'label' => 'terms and condition',
+                        'rules' => 'required'
+                    )
                 ));
 
                 if ($this->form_validation->run())

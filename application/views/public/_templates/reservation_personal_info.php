@@ -41,7 +41,7 @@ echo form_open(base_url('reservation/personal-info'));
                 </div>
                 <div class="clearfix mg-terms-input">
                     <div class="pull-right">
-                        <label><input type="checkbox"> By Sign up you are agree with our <a href="#">terms and condition</a></label>
+                        <label><?php echo form_checkbox('personal_info_check_box','accept') ?> By Sign up you are agree with our <a href="#">terms and condition</a></label>
                     </div>
                 </div>
                 <?php echo form_submit('persona_info_btn', 'Next', array('class' => 'btn btn-dark-main pull-right')) ?>

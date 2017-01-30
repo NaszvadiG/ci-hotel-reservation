@@ -19,7 +19,8 @@ class Contact_us extends Public_Controller
 
 
                 $this->data['title_top']      = get_class();
-                $this->data['title_top_desc'] = 'my desc';
+                $this->data['title_top_desc'] = $this->config->item('contact_page');
+                ;
                 $this->data['result']         = '';
 
                 $this->form_validation->set_rules(array(

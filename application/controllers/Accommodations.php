@@ -15,7 +15,7 @@ class Accommodations extends Public_Controller
         public function index()
         {
                 $this->data['title_top']      = get_class();
-                $this->data['title_top_desc'] = 'my desc';
+                $this->data['title_top_desc'] = $this->config->item('accomodation_page');
 
                 $this->template['image_top_header'] = $this->_render_page('public/_templates/image_top_header', $this->data, TRUE);
                 $this->template['room_types']       = $this->Room_type_model->where(array('room_type_active' => TRUE))->as_object()->get_all();

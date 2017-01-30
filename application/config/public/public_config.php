@@ -14,6 +14,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 /*
   | ---------------------------------
+  | pages
+  | ---------------------------------
+  |
+  |
+  |
+  |
+  |
+ */
+
+$config['accomodation_page'] = 'accomodation test';
+$config['reservation_page']  = 'reservation test';
+$config['contact_page']      = 'contact test';
+/*
+  | ---------------------------------
   | slider info
   | ---------------------------------
   |
@@ -23,13 +37,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   |
  */
 //1st
-$config['first_sub_desc']  = '1st sub';
+$config['first_sub_desc']    = '1st sub';
 //2nd
-$config['second_desc']     = '2nd decf';
-$config['second_sub_desc'] = '2nd sub desc';
+$config['second_desc']       = '2nd decf';
+$config['second_sub_desc']   = '2nd sub desc';
 //3rd
-$config['third_desc']      = '3rd dexc';
-$config['third_sub_desc']  = '3rd sub dec';
+$config['third_desc']        = '3rd dexc';
+$config['third_sub_desc']    = '3rd sub dec';
 
 /*
   | ---------------------------------
