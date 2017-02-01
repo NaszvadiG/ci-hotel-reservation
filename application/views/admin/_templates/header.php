@@ -160,10 +160,11 @@ echo doctype('html5');
                         ?>
                     </li>
                     <?php
-                    echo (ENVIRONMENT === 'development') ?
-                            '<li>[rendered <strong>{elapsed_time} - {memory_usage}</strong> ver. <strong>'
-                            . CI_VERSION
-                            . '</strong>]</li>' : ''
+                    if (ENVIRONMENT === 'development')
+                    {
+
+                            echo comment_tag('version: ' . CI_VERSION . '');
+                    }
                     ?>
                 </ol>
             </div><!--/.row-->
