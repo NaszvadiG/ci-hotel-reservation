@@ -63,6 +63,7 @@ echo form_open(base_url('reservation/payment'));
                         </div>
                     </div>
                 </div>
+                <?php echo form_submit('payment_later__btn', 'Pay Later', array('class' => 'btn btn-dark-main pull-right')) ?>
                 <?php echo form_submit('payment__btn', 'Pay Now', array('class' => 'btn btn-dark-main pull-right')) ?>
             </div>
         </div>

@@ -14,6 +14,7 @@ class Reservations extends Admin_Controller
         {
                 $this->template['table'] = $this->_render_table_view('Reservations', 'reservations', array(
                     'payment_id'  => 'Payment ID',
+                    'payment_'  => 'Payment',
                     'check_in'    => 'Check In',
                     'check_out'   => 'Check Out',
                     'room_number' => 'Room Number',

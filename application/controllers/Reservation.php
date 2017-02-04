@@ -31,6 +31,8 @@ class Reservation extends Public_Controller
                     'card_cvv',
                     'card_expire_month',
                     'card_expire_year',
+                    //
+                    'payment_'
                 );
                 $this->load->model('Room_model');
                 $this->load->library('form_validation');
@@ -293,38 +295,58 @@ class Reservation extends Public_Controller
 
         public function payment()
         {
+                $rule = '';
+                if ($this->input->post('payment__btn', TRUE))
+                {
+                        $rule = '|required';
+                }
                 $this->validate_page_(4);
                 $this->form_validation->set_rules(array(
                     array(
                         'field' => 'card_number',
                         'label' => 'Card Number',
-                        'rules' => 'required',
+                        'rules' => 'trim' . $rule,
                     ),
                     array(
                         'field' => 'card_cvv',
                         'label' => 'CVV',
-                        'rules' => 'required',
+                        'rules' => 'trim' . $rule,
                     ),
                     array(
                         'field' => 'card_expire_month',
                         'label' => 'Expire',
-                        'rules' => 'required',
+                        'rules' => 'trim' . $rule,
                     ),
                     array(
                         'field' => 'card_expire_year',
                         'label' => 'Expire Year',
-                        'rules' => 'required',
+                        'rules' => 'trim' . $rule,
                     ),
                 ));
 
                 if ($this->form_validation->run())
                 {
-                        $this->session->set_userdata(array(
-                            'card_number'       => $this->input->post('card_number', TRUE),
-                            'card_cvv'          => $this->input->post('card_cvv', TRUE),
-                            'card_expire_month' => $this->input->post('card_expire_month', TRUE),
-                            'card_expire_year'  => $this->input->post('card_expire_year', TRUE)
-                        ));
+                        if ($this->input->post('payment_later__btn', TRUE))
+                        {
+                                $this->session->set_userdata(array(
+                                    'card_number'       => $this->input->post('card_number', TRUE),
+                                    'card_cvv'          => $this->input->post('card_cvv', TRUE),
+                                    'card_expire_month' => $this->input->post('card_expire_month', TRUE),
+                                    'card_expire_year'  => $this->input->post('card_expire_year', TRUE),
+                                    'payment_'          => 'later'
+                                ));
+                        }
+                        elseif ($this->input->post('payment__btn', TRUE))
+                        {
+                                $this->session->set_userdata(array(
+                                    'card_number'       => $this->input->post('card_number', TRUE),
+                                    'card_cvv'          => $this->input->post('card_cvv', TRUE),
+                                    'card_expire_month' => $this->input->post('card_expire_month', TRUE),
+                                    'card_expire_year'  => $this->input->post('card_expire_year', TRUE),
+                                    'payment_'          => 'paid'
+                                ));
+                        }
+
                         redirect(base_url('reservation/thank-you'), 'refresh');
                 }
                 else

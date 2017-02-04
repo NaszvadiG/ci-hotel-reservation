@@ -119,6 +119,7 @@ class Api_web extends Admin_Controller
                                 $room_type_obj = $this->Room_type_model->as_object()->get($v->room->room_type_id);
                                 $data[]        = array(
                                     'payment_id'  => $v->reservation_payment_id,
+                                    'payment_'     => $v->reservation_payment_,
                                     'room_number' => $v->room->room_number,
                                     'room_type'   => $room_type_obj->room_type_name,
                                     'check_in'    => my_unix_to_human_conveter_($v->reservation_check_in),
